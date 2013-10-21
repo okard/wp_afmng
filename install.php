@@ -48,6 +48,7 @@ function afmng_install_db()
 				prev_step_id mediumint(9) NULL,
 				name tinytext NOT NULL,
 				description mediumtext NULL,
+				capability tinytext NULL,
 				PRIMARY KEY  (step_id)
 				);
 				CREATE TABLE ".$tbl_release_steps_map." (
@@ -73,12 +74,42 @@ function afmng_install_db()
 }
 
 
+function afmng_db_add_step($step_id, $prev_step, $name, $desc, $cap)
+{
+	global $wpdb;
+	$wpdb->insert( afmngdb::$tbl_release_steps,  array( 
+			'step_id' => $step_id,
+			'prev_step_id' => $prev_step, 
+			'name' => $name,
+			'description' => $desc,
+			'capability' => $cap
+		), 
+		array( '%d', '%d', '%s', '%s', '%s') 
+	);
+}
+
+
 function afmng_install_dbdata() 
 {
-   global $wpdb;
-   
-   //add steps
-   
+	//Raw
+	afmng_db_add_step(0, null, 'Raw', 'Raw verfügbar', 'afmng_rawprovider');
+	//Translation
+	afmng_db_add_step(1, 0, 'Translation', 'Übersetzung', 'afmng_translator');
+	//Edit
+	afmng_db_add_step(2, 1, 'Edit', 'Edit', 'afmng_edit');
+	//Typeset
+	afmng_db_add_step(3, 2, 'Typeset', 'Typeset', 'afmng_typeset');
+	//Karaoke
+	afmng_db_add_step(4, 3, 'Karaoke', 'Karaoke', 'afmng_karaoke');
+	//QC
+	afmng_db_add_step(5, 4, 'QC', 'Quality Check', 'afmng_qc');
+	//Mux
+	afmng_db_add_step(6, 5, 'Mux', 'Mux & UL', 'afmng_mux');
+	//Hardsub
+	afmng_db_add_step(7, 6, 'Hardsub', 'Hardsub', 'afmng_hardsub');
+	
+	//V2 & Co
+	afmng_db_add_step(8, null, 'Rerelease', 'Rerelease', 'afmng_rerelease');
 }
 
 

@@ -12,20 +12,7 @@
 			<th>Anime Name</th>
 			<th>Beschreibung</th>
 		</thead>
-		<?php foreach($this->projects as $p): ?>
-		<tr>
-			<td><?php echo $p->project_id; ?></td>
-			<td><?php echo $p->anime_name; ?></td>
-			<td><?php echo $p->anime_description; ?></td>
-			<td><?php echo $p->creation_date; ?></td>
-			<td><?php echo afmng_editlink_bypagetitle($p->anime_name) ?></td>
-		</tr>
-		<?php endforeach; ?>
 	</table>
-
-	<p class="submit">
-	<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" />
-	</p>
 </form>
 
 

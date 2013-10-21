@@ -10,8 +10,9 @@ function afmng_menu_setup()
 	
 	//todo list
 	add_submenu_page('afmng_main_menu', 'TODO Liste', 'TODO Liste', 'publish_posts', 'afmng_menu_todo', 'afmng_menu_todo');
-	//user management page
 	
+	//user management page
+	//project administration
 }
 
 /**
@@ -19,6 +20,8 @@ function afmng_menu_setup()
 */
 function afmng_menu_main()
 {
+	$current_user = wp_get_current_user();
+	
 	//check for required stuff?
 	// * a parent "Projekte" page
 	
@@ -27,9 +30,9 @@ function afmng_menu_main()
 	
 	
 	$ltpl = new LTemplate();
-	//add database informations
-	$ltpl->projects = afmng_project_list();
-	$ltpl->get_edit_link = 'afmng_editlink_bypagetitle';
+	$ltpl->tasks = afmng_db_gettasks($current_user->user_login);
+	
+	//own tasks
 	
 	if (is_admin())
 	{

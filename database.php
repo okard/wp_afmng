@@ -77,6 +77,32 @@ function afmng_projects_add($name, $description)
 
 
 /**
+* Get active tasks/steps for username
+*/
+function afmng_db_gettasks($user)
+{
+	global $wpdb;	
+	
+	return $wpdb->get_results( 
+		"
+		SELECT
+			p.anime_name,
+			r.episode_no,
+			r.episode_title,
+			sm.step_id
+		FROM ".afmngdb::$tbl_release_steps_map." as sm
+		INNER JOIN ".afmngdb::$tbl_releases." as r 
+			ON sm.release_id = r.release_id
+		INNER JOIN ".afmngdb::$tbl_projects." as p
+			ON p.project_id = r.project_id
+		WHERE
+			sm.user = '$user'
+		"
+	);
+}
+
+
+/**
 * Edit link to a page find by title
 */
 function afmng_editlink_bypagetitle($title)
