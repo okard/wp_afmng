@@ -4,12 +4,17 @@ class afmngdb
 {
 	public static $tbl_projects;
 	public static $tbl_releases;
+	public static $tbl_release_steps;
+	public static $tbl_release_steps_map;
+	
 
     public static function setup() 
     {
 		global $wpdb;
 		self::$tbl_projects = $wpdb->prefix . "afmng_projects";
 		self::$tbl_releases = $wpdb->prefix . "afmng_releases";
+		self::$tbl_release_steps  = $wpdb->prefix . "afmng_release_steps";
+		self::$tbl_release_steps_map = $wpdb->prefix . "afmng_release_steps_map";
     }
 
 }
