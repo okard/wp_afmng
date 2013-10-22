@@ -21,4 +21,19 @@ function afmng_get_tplfile($filename)
 }
 
 
+/**
+* Edit link to a page find by title
+*/
+function afmng_editlink_bypagetitle($title)
+{
+	$page = get_page_by_title($title);
+	
+	if($page != null)
+	{
+		return '<a href="'.get_edit_post_link($page->ID).'">Edit</a>';
+	}
+	else
+		return "<p>Keine Seite verfügbar</p>";
+}
+
 ?>

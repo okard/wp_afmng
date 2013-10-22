@@ -31,7 +31,8 @@ function afmng_project_list()
 	
 	return $wpdb->get_results( 
 		"
-		SELECT project_id, anime_name, anime_description, creation_date
+		SELECT project_id, 
+			   anime_name
 		FROM ".afmngdb::$tbl_projects."
 		ORDER BY creation_date DESC
 		"
@@ -89,8 +90,11 @@ function afmng_db_gettasks($user)
 			p.anime_name,
 			r.episode_no,
 			r.episode_title,
-			sm.step_id
+			s.name,
+			sm.state_no
 		FROM ".afmngdb::$tbl_release_steps_map." as sm
+		INNER JOIN ".afmngdb::$tbl_release_steps." as s
+			ON s.step_id = sm.step_id
 		INNER JOIN ".afmngdb::$tbl_releases." as r 
 			ON sm.release_id = r.release_id
 		INNER JOIN ".afmngdb::$tbl_projects." as p
@@ -100,23 +104,5 @@ function afmng_db_gettasks($user)
 		"
 	);
 }
-
-
-/**
-* Edit link to a page find by title
-*/
-function afmng_editlink_bypagetitle($title)
-{
-	$page = get_page_by_title($title);
-	
-	if($page != null)
-	{
-		return '<a href="'.get_edit_post_link($page->ID).'">Edit</a>';
-	}
-	else
-		return "<p>Keine Seite verfügbar</p>";
-}
-
-
 
 ?>

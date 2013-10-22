@@ -48,7 +48,7 @@ class LTemplate
 	public function render($filename)
 	{
 		if(!is_file($filename))
-			die("Can't find template");
+			echo("Error: Can't find template");
 			
 		include($filename);
 	}

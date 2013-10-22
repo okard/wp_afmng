@@ -6,13 +6,22 @@ add_action( 'admin_menu', 'afmng_menu_setup' );
 function afmng_menu_setup() 
 {
 	//add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
-	add_menu_page('Anime Fansub Manager', 'AFMNG', 'publish_posts', 'afmng_main_menu', 'afmng_menu_main', null, 3);
+	add_menu_page('Anime Fansub Manager', 'Anfam', 'publish_posts', 'afmng_main_menu', 'afmng_menu_main', null, 3);
 	
 	//todo list
 	add_submenu_page('afmng_main_menu', 'TODO Liste', 'TODO Liste', 'publish_posts', 'afmng_menu_todo', 'afmng_menu_todo');
 	
-	//user management page
-	//project administration
+	//only if caps are ok?:
+	if(is_admin())
+	{
+		//User Manager
+		add_submenu_page('afmng_main_menu', 'User Manager', 'User Manager', 'publish_posts', 'afmng_menu_usermng', 'afmng_menu_usermng');
+
+		//Project Manager
+		add_submenu_page('afmng_main_menu', 'Projekt Manager', 'Projekt Manager', 'publish_posts', 'afmng_menu_projectmng', 'afmng_menu_projectmng');
+	
+		//Completed Projects
+	}
 }
 
 /**
@@ -87,11 +96,33 @@ function afmng_menu_todo()
 	$ltpl = new LTemplate();
 	
 	//set the right data
-	$ltpl->lastreleases = afmng_projects_lastreleases();
+	//$ltpl->lastreleases = afmng_projects_lastreleases();
 	
 	//render page
 	$ltpl->render(afmng_get_tplfile('tpl.TodoList.php'));
 }
+
+
+/**
+* Render the Project Manager Page
+*/
+function afmng_menu_projectmng()
+{
+	$ltpl = new LTemplate();
+	//render page
+	$ltpl->render(afmng_get_tplfile('tpl.ProjectMng.php'));
+}
+
+/**
+* Render the User Manager Page
+*/
+function afmng_menu_usermng()
+{
+	$ltpl = new LTemplate();
+	//render page
+	$ltpl->render(afmng_get_tplfile('tpl.UserMng.php'));
+}
+
 
 
 ?>

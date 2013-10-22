@@ -1,9 +1,7 @@
 
-<h1>Main Menu</h1>
+<h1>Anime Fansub Manager</h1>
 
-<?php echo get_edit_post_link(); ?> 
-
-
+<h2>Meine aktuellen Tasks</h2>
 <form name="form1" method="post" action="">
 	
 	<table>
@@ -14,6 +12,8 @@
 		</thead>
 	</table>
 </form>
+
+<h2>Offene Tasks</h2>
 
 
 <?php if($this->is_admin): ?>
