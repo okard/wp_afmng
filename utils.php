@@ -36,4 +36,30 @@ function afmng_editlink_bypagetitle($title)
 		return "<p>Keine Seite verfügbar</p>";
 }
 
+
+function afmng_group_dbresult($data, $grouping)
+{
+	if(count($grouping) == 0)
+		return null;
+
+	$current_group = array_shift($grouping);
+	$object = array();
+	
+	foreach($data as $entry)
+	{
+		$row = array();
+		foreach($current_group as $grp_field)
+		{
+			$row[$grp_field] = $entry->$grp_field;
+		}
+		$row['__data'] = afmng_group_dbresult($data, $grouping);
+		
+		array_push($object, $row);
+	}
+	
+	return $object;
+}
+
+
+
 ?>

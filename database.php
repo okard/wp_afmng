@@ -25,16 +25,29 @@ $afmngdb = 'afmngdb';
 /**
 * Return a project list
 */
-function afmng_project_list()
+function afmng_db_project_list()
 {
 	global $wpdb;
 	
 	return $wpdb->get_results( 
 		"
-		SELECT project_id, 
-			   anime_name
-		FROM ".afmngdb::$tbl_projects."
-		ORDER BY creation_date DESC
+		SELECT p.project_id, 
+			   p.anime_name,
+			   r.release_id,
+			   r.episode_no,
+			   r.episode_title,
+			   sm.step_id,
+			   s.name as step_name,
+			   sm.user,
+			   sm.state_no,
+			   sm.description
+		FROM ".afmngdb::$tbl_projects." as p
+		LEFT JOIN ".afmngdb::$tbl_releases." as r
+			ON r.project_id = p.project_id
+		LEFT JOIN ".afmngdb::$tbl_release_steps_map." as sm
+			ON sm.release_id = r.release_id
+		LEFT JOIN ".afmngdb::$tbl_release_steps." as s
+			ON s.step_id = sm.step_id	
 		"
 	);
 }

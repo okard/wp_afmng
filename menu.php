@@ -109,6 +109,19 @@ function afmng_menu_todo()
 function afmng_menu_projectmng()
 {
 	$ltpl = new LTemplate();
+	
+	
+	$data = afmng_db_project_list();
+	
+	
+	$d = afmng_group_dbresult($data, array(array('project_id', 'anime_name'), 
+	                                       array('release_id', 'episode_no', 'episode_title'),
+	                                        array('step_name', 'user', 'state_no', 'description')));
+	
+	//var_dump($d);
+	
+	$ltpl->project_list = $d;
+	
 	//render page
 	$ltpl->render(afmng_get_tplfile('tpl.ProjectMng.php'));
 }
