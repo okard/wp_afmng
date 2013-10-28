@@ -6,10 +6,7 @@ add_action( 'admin_menu', 'afmng_menu_setup' );
 function afmng_menu_setup() 
 {
 	//add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
-	add_menu_page('Anime Fansub Manager', 'Anfam', 'publish_posts', 'afmng_main_menu', 'afmng_menu_main', null, 3);
-	
-	//todo list
-	add_submenu_page('afmng_main_menu', 'TODO Liste', 'TODO Liste', 'publish_posts', 'afmng_menu_todo', 'afmng_menu_todo');
+	add_menu_page('Aufgaben', 'Aufgaben', 'publish_posts', 'afmng_main_menu', 'afmng_menu_main', null, 3);
 	
 	//only if caps are ok?:
 	if(is_admin())
@@ -37,9 +34,9 @@ function afmng_menu_main()
 	if(afmng_check_post())
 		afmng_menu_main_postback();
 	
-	
 	$ltpl = new LTemplate();
 	$ltpl->tasks = afmng_db_gettasks($current_user->user_login);
+	$ltpl->user = $current_user->user_login;
 	
 	//own tasks
 	
@@ -68,40 +65,6 @@ function afmng_menu_main_postback()
 			break;
 	}
 }
-
-
-
-
-/** 
-* Render the AFMNG todo list 
-*/
-function afmng_menu_todo() 
-{
-	/*if ( !current_user_can( 'manage_options' ) )  
-	{
-		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
-	}*/
-	
-	//different views? 
-	
-	//get cap for current user?
-		//trans, qc, karoake, fx, raw 
-	
-	if(afmng_check_post())
-	{
-		//handle form postback
-	}
-	
-	
-	$ltpl = new LTemplate();
-	
-	//set the right data
-	//$ltpl->lastreleases = afmng_projects_lastreleases();
-	
-	//render page
-	$ltpl->render(afmng_get_tplfile('tpl.TodoList.php'));
-}
-
 
 /**
 * Render the Project Manager Page

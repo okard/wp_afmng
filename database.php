@@ -7,6 +7,8 @@ class afmngdb
 	public static $tbl_release_steps;
 	public static $tbl_release_steps_map;
 	
+	
+	public static $step_state = array(0 => 'Offen', 1 => 'In Bearbeitung', 2 => 'Erledigt');
 
     public static function setup() 
     {
@@ -79,6 +81,7 @@ function afmng_db_release_steps($releaseid)
 		INNER JOIN ".afmngdb::$tbl_release_steps." as s
 			ON s.step_id = sm.step_id	
 		WHERE sm.release_id=%d
+		ORDER BY sm.step_id ASC
 		",
 		$releaseid
         );
@@ -86,18 +89,37 @@ function afmng_db_release_steps($releaseid)
 	return $wpdb->get_results($sql);
 }
 
+/**
+* Get strings for state
+*/
 function afmng_db_steps_state($state_no)
 {
-	switch($state_no)
-	{
-		case 1:
-			return 'Offen';
-		case 2:
-			return 'In Bearbeitung';
-		case 3:
-			return 'Erledigt';
-	}
+	return afmngdb::$step_state[$state_no];
 }
+
+/**
+* Check caps for current user
+*/
+function afmng_db_user_getcaps()
+{
+	$caps = array('afmng_rawprovider',
+	              'afmng_translator',
+	              'afmng_edit',
+	              'afmng_typeset',
+	              'afmng_karaoke',
+	              'afmng_qc',
+	              'afmng_mux',
+	              'afmng_hardsub');
+	
+	$has = array();
+	
+	foreach($caps as $cap)
+		if(current_user_can($cap))
+			array_push($has, $cap);	
+			
+	return $has;
+}
+
 
 
 function afmng_projects_lastreleases()

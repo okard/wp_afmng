@@ -22,7 +22,7 @@ FROM wp_afmng_projects as p WHERE p.anime_name='Anime 1';
 
 -- Release Steps
 INSERT INTO wp_afmng_release_steps_map(release_id, step_id, user, state_no, description)
-SELECT r.release_id, 1, 'admin', 3, 'Test'
+SELECT r.release_id, 1, 'admin', 2, 'Test'
 FROM wp_afmng_releases as r
 INNER JOIN wp_afmng_projects as p
 	ON r.project_id = p.project_id
@@ -30,7 +30,7 @@ WHERE p.anime_name = 'Anime 1'
   AND r.episode_no = '1';
 
 INSERT INTO wp_afmng_release_steps_map(release_id, step_id, user, state_no, description)
-SELECT r.release_id, 2, 'admin', 3, 'Test'
+SELECT r.release_id, 2, 'admin', 2, 'Test'
 FROM wp_afmng_releases as r
 INNER JOIN wp_afmng_projects as p
 	ON r.project_id = p.project_id
