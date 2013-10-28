@@ -29,27 +29,74 @@ function afmng_db_project_list()
 {
 	global $wpdb;
 	
+	
 	return $wpdb->get_results( 
 		"
 		SELECT p.project_id, 
-			   p.anime_name,
-			   r.release_id,
+			   p.anime_name
+		FROM ".afmngdb::$tbl_projects." as p
+		WHERE p.completed = false
+		"
+	);
+}
+
+/**
+* Get releases for a project
+*/
+function afmng_db_project_releases($projectid)
+{
+	global $wpdb;
+	
+	$sql = $wpdb->prepare( 
+		"
+		SELECT r.release_id,
 			   r.episode_no,
-			   r.episode_title,
-			   sm.step_id,
+			   r.episode_title
+		FROM ".afmngdb::$tbl_releases." as r
+		WHERE r.project_id=%d
+		",
+		$projectid
+        );
+        
+	return $wpdb->get_results($sql);
+}
+
+/**
+* get steps of a release
+*/
+function afmng_db_release_steps($releaseid)
+{
+	global $wpdb;
+	
+	$sql = $wpdb->prepare( 
+		"
+		SELECT sm.step_id,
 			   s.name as step_name,
 			   sm.user,
 			   sm.state_no,
 			   sm.description
-		FROM ".afmngdb::$tbl_projects." as p
-		LEFT JOIN ".afmngdb::$tbl_releases." as r
-			ON r.project_id = p.project_id
-		LEFT JOIN ".afmngdb::$tbl_release_steps_map." as sm
-			ON sm.release_id = r.release_id
-		LEFT JOIN ".afmngdb::$tbl_release_steps." as s
+		FROM ".afmngdb::$tbl_release_steps_map." as sm
+		INNER JOIN ".afmngdb::$tbl_release_steps." as s
 			ON s.step_id = sm.step_id	
-		"
-	);
+		WHERE sm.release_id=%d
+		",
+		$releaseid
+        );
+        
+	return $wpdb->get_results($sql);
+}
+
+function afmng_db_steps_state($state_no)
+{
+	switch($state_no)
+	{
+		case 1:
+			return 'Offen';
+		case 2:
+			return 'In Bearbeitung';
+		case 3:
+			return 'Erledigt';
+	}
 }
 
 
