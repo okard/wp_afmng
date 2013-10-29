@@ -13,7 +13,7 @@ function afmng_check_post()
 */
 function afmng_get_tplfile($filename)
 {
-	$tpl = get_template_directory().'/'.$filename;
+	$tpl = get_template_directory().'/afmng/'.$filename;
 	if(file_exists($tpl))
 		return $tpl;
 	else

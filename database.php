@@ -100,7 +100,7 @@ function afmng_db_steps_state($state_no)
 /**
 * Check caps for current user
 */
-function afmng_db_user_getcaps()
+function afmng_db_user_getcaps($user_id)
 {
 	$caps = array('afmng_rawprovider',
 	              'afmng_translator',
@@ -114,7 +114,7 @@ function afmng_db_user_getcaps()
 	$has = array();
 	
 	foreach($caps as $cap)
-		if(current_user_can($cap))
+		if(user_can($user_id, $cap))
 			array_push($has, $cap);	
 			
 	return $has;
@@ -137,8 +137,10 @@ function afmng_projects_lastreleases()
 	);
 }
 
-
-function afmng_projects_add($name, $description)
+/**
+* Add a new anime project
+*/
+function afmng_project_add($name)
 {
 	global $wpdb;
 
@@ -146,16 +148,54 @@ function afmng_projects_add($name, $description)
 		afmngdb::$tbl_projects, 
 		array( 
 			'anime_name' => $name, 
-			'anime_description' => $description,
-			'creation_date' => current_time( 'mysql', 1 )
 		), 
 		array( 
-			'%s', 
-			'%s',
 			'%s'
 		) 
 	);
 	
+}
+
+/**
+* Update a project
+*/
+function afmng_project_update($project_id, $name, $completed, $licensed)
+{
+	global $wpdb;
+	
+	$wpdb->update( 
+	afmngdb::$tbl_projects, 
+	array( 
+		'anime_name' => $name,
+		'completed' => $completed,
+		'licensed' => $licensed
+	), 
+	array( 'project_id' => $project_id ), 
+	array( '%s','%d', '%d'), 
+	array( '%d' ) 
+    );
+}
+
+/**
+* Add a new anime release (episode)
+*/
+function afmng_db_release_add($project_id, $episode_no, $episode_title)
+{
+	global $wpdb;
+
+	$wpdb->insert( 
+		afmngdb::$tbl_releases, 
+		array( 
+			'project_id' => $project_id,
+			'episode_no' => $episode_no,
+			'episode_title' => $episode_title
+		), 
+		array( 
+			'%d',
+			'%s',
+			'%s'
+		) 
+	);
 }
 
 
@@ -173,7 +213,8 @@ function afmng_db_gettasks($user)
 			r.episode_no,
 			r.episode_title,
 			s.name,
-			sm.state_no
+			sm.state_no,
+			sm.description
 		FROM ".afmngdb::$tbl_release_steps_map." as sm
 		INNER JOIN ".afmngdb::$tbl_release_steps." as s
 			ON s.step_id = sm.step_id
@@ -185,6 +226,40 @@ function afmng_db_gettasks($user)
 			sm.user = '$user'
 		"
 	);
+}
+
+
+function afmng_db_releases_available($user_id)
+{
+	
+	//afmng_db_user_getcaps($user_id)
+	// get_userdata( $userid );
+	//usr is admin
+	//afmng_db_user_getcaps for user
+	
+	/*
+	 SELECT 
+			anime,
+			episode
+			step_id, 
+			name 
+	 FROM tbl_release_steps as s
+	 * 
+	 LEFT JOIN tbl_anime as p
+	 LEFT JOIN tbl_releases as r
+	 LEFT JOIN tbl_release_map as sm
+		//null
+		//
+	*/
+	
+	//anime_name
+	//episode
+	//step
+	
+	//if admin each step is available
+	//display only steps when prev_id exists and state_no == 2
+	
+	//assign / create step button
 }
 
 ?>

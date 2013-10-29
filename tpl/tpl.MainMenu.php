@@ -10,6 +10,7 @@
 		<th>Episode</th>
 		<th>Aufgabe</th>
 		<th>Status</th>
+		<th>Notizen</th>
 		<th></th>
 		</tr>
 	</thead>
@@ -18,7 +19,7 @@
 	<?php foreach($this->tasks as $task): ?>
 	<tr>
 		<td><?php echo $task->anime_name; ?></td>
-		<td><?php echo $task->episode_no.' / '.$task->episode_title; ?></td>
+		<td><?php echo $task->episode_no, ' / ', $task->episode_title; ?></td>
 		<td><?php echo $task->name; ?></td>
 		<td>
 			<form>
@@ -29,6 +30,7 @@
 			</select>
 			</form>
 		</td>
+		<td><?php echo $task->description; ?></td>
 		<td>Speichern</td>
 	</tr>
 	<?php endforeach; ?>
@@ -36,9 +38,10 @@
 
 <!-- Hidden Form -->
 			
-
 <h2>Verfügbare Aufgaben</h2>
+<!-- available releases and follow releases when the step before is done -->
 
+<!-- if admin add option to add any tasks -->
 
 <h2>Abgeschlossene Aufgaben</h2>
 

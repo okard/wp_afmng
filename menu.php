@@ -26,6 +26,7 @@ function afmng_menu_setup()
 */
 function afmng_menu_main()
 {
+	//get_current_user_id();
 	$current_user = wp_get_current_user();
 	
 	//check for required stuff?
@@ -40,11 +41,7 @@ function afmng_menu_main()
 	
 	//own tasks
 	
-	if (is_admin())
-	{
-		$ltpl->is_admin = true;
-		//add admin info
-	}
+	$ltpl->is_admin = is_admin();
 	
 	//render template
 	$ltpl->render(afmng_get_tplfile('tpl.MainMenu.php'));
@@ -57,13 +54,6 @@ function afmng_menu_main_postback()
 {
 	//check if user has the rights
 	//if( !current_user_can( 'manage_options' )
-	
-	switch($_POST["action"])
-	{
-		case 'create_anime':
-			afmng_projects_add($_POST["anime_name"], $_POST["anime_description"]);
-			break;
-	}
 }
 
 /**
@@ -73,6 +63,9 @@ function afmng_menu_projectmng()
 {
 	//right check
 	
+	if(afmng_check_post())
+		afmng_menu_projectmng_postback();
+	
 	$ltpl = new LTemplate();
 	
 	$ltpl->project_list = afmng_db_project_list();
@@ -80,6 +73,26 @@ function afmng_menu_projectmng()
 	//render page
 	$ltpl->render(afmng_get_tplfile('tpl.ProjectMng.php'));
 }
+
+function afmng_menu_projectmng_postback()
+{
+	switch($_POST["action"])
+	{
+		case 'add_project':
+			afmng_project_add($_POST["anime_name"]);
+			break;
+			
+		case 'update_project':
+			afmng_project_update($_POST["project_id"], $_POST["anime_name"], 0, 0 );
+			break;
+
+		case 'add_release':
+			afmng_db_release_add($_POST["project_id"], $_POST["episode_no"], $_POST["episode_title"]);
+			break;
+	}
+}
+
+
 
 /**
 * Render the User Manager Page
