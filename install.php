@@ -64,7 +64,7 @@ function afmng_install_db()
 				);
 				";
 				
-	  //file_put_contents(AFMNG_PLUGINDIR.'/sql/afmngdb.sql', $sql);
+	  file_put_contents(AFMNG_PLUGINDIR.'/sql/afmngdb.sql', $sql);
 	  
 	  require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	  $result = dbDelta( $sql );

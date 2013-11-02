@@ -18,14 +18,17 @@ CREATE TABLE wp_afmng_projects (
 				prev_step_id mediumint(9) NULL,
 				name tinytext NOT NULL,
 				description mediumtext NULL,
+				capability tinytext NULL,
 				PRIMARY KEY  (step_id)
 				);
 				CREATE TABLE wp_afmng_release_steps_map (
+				task_id mediumint(9) NOT NULL AUTO_INCREMENT,
 				release_id mediumint(9) NOT NULL,
 				step_id mediumint(9) NOT NULL,
 				user tinytext NULL,
 				state_no tinyint(1) DEFAULT 0 NOT NULL,
 				description mediumtext NULL,
+				PRIMARY KEY  (task_id),
 				FOREIGN KEY (release_id) REFERENCES wp_afmng_releases (release_id),
 				FOREIGN KEY (step_id) REFERENCES wp_afmng_release_steps (step_id)
 				);

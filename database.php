@@ -280,4 +280,26 @@ function afmng_db_steps()
 }
 
 
+function afmng_db_task_add($release_id, $step_id, $user)
+{
+	global $wpdb;
+	
+	if($user == '')
+		$user = null;
+
+	$wpdb->insert( 
+		afmngdb::$tbl_release_steps_map, 
+		array( 
+			'release_id' => $release_id,
+			'step_id' => $step_id,
+			'user' => $user
+		), 
+		array( 
+			'%d',
+			'%d',
+			'%s'
+		) 
+	);
+}
+
 ?>

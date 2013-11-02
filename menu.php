@@ -62,7 +62,7 @@ function afmng_menu_tasks_postback()
 	switch($_POST["action"])
 	{
 		case 'admin_task_add':
-			
+			afmng_db_task_add($_POST['episode'], $_POST['step'], $_POST['user']);
 			break;
 	}
 }
