@@ -262,4 +262,22 @@ function afmng_db_releases_available($user_id)
 	//assign / create step button
 }
 
+/**
+* Return all available steps
+*/
+function afmng_db_steps()
+{
+	global $wpdb;	
+	
+	return $wpdb->get_results( 
+		"
+		SELECT
+			s.step_id,
+			s.name
+		FROM ".afmngdb::$tbl_release_steps." as s
+		"
+	);
+}
+
+
 ?>

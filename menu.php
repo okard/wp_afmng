@@ -6,25 +6,27 @@ add_action( 'admin_menu', 'afmng_menu_setup' );
 function afmng_menu_setup() 
 {
 	//add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
-	add_menu_page('Aufgaben', 'Aufgaben', 'publish_posts', 'afmng_main_menu', 'afmng_menu_main', null, 3);
+	add_menu_page('Aufgaben', 'Aufgaben', 'publish_posts', 'afmng_menu_tasks', 'afmng_menu_tasks', null, 3);
 	
 	//only if caps are ok?:
 	if(is_admin())
 	{
 		//User Manager
-		add_submenu_page('afmng_main_menu', 'User Manager', 'User Manager', 'publish_posts', 'afmng_menu_usermng', 'afmng_menu_usermng');
+		add_submenu_page('afmng_menu_tasks', 'User Manager', 'User Manager', 'publish_posts', 'afmng_menu_usermng', 'afmng_menu_usermng');
 
 		//Project Manager
-		add_submenu_page('afmng_main_menu', 'Projekt Manager', 'Projekt Manager', 'publish_posts', 'afmng_menu_projectmng', 'afmng_menu_projectmng');
+		add_submenu_page('afmng_menu_tasks', 'Projekt Manager', 'Projekt Manager', 'publish_posts', 'afmng_menu_projectmng', 'afmng_menu_projectmng');
 	
 		//Completed Projects
+		
+		//Manage Steps? Show Steps?
 	}
 }
 
 /**
 * Renders the AFMNG main menu
 */
-function afmng_menu_main()
+function afmng_menu_tasks()
 {
 	//get_current_user_id();
 	$current_user = wp_get_current_user();
@@ -33,7 +35,7 @@ function afmng_menu_main()
 	// * a parent "Projekte" page
 	
 	if(afmng_check_post())
-		afmng_menu_main_postback();
+		afmng_menu_tasks_postback();
 	
 	$ltpl = new LTemplate();
 	$ltpl->tasks = afmng_db_gettasks($current_user->user_login);
@@ -50,11 +52,31 @@ function afmng_menu_main()
 /**
 * Postback Handler for MainMenu
 */
-function afmng_menu_main_postback()
+function afmng_menu_tasks_postback()
 {
 	//check if user has the rights
 	//if( !current_user_can( 'manage_options' )
+	
+	//admin_task_add
+	
+	switch($_POST["action"])
+	{
+		case 'admin_task_add':
+			
+			break;
+	}
 }
+
+/**
+* Tasks Scripts
+*/
+add_action( 'admin_enqueue_scripts', 'afmng_menu_tasks_scripts');
+function afmng_menu_tasks_scripts($hook) 
+{
+	//page=afmng_menu_tasks
+    wp_enqueue_script('afmng_menu_tasks_scripts', plugins_url('afmng/js/tasks.js') );
+}
+
 
 /**
 * Render the Project Manager Page
@@ -67,13 +89,16 @@ function afmng_menu_projectmng()
 		afmng_menu_projectmng_postback();
 	
 	$ltpl = new LTemplate();
-	
 	$ltpl->project_list = afmng_db_project_list();
+	$ltpl->is_admin = is_admin();
 	
 	//render page
 	$ltpl->render(afmng_get_tplfile('tpl.ProjectMng.php'));
 }
 
+/**
+* Postback handling for ProjectManager
+*/
 function afmng_menu_projectmng_postback()
 {
 	switch($_POST["action"])
@@ -91,8 +116,6 @@ function afmng_menu_projectmng_postback()
 			break;
 	}
 }
-
-
 
 /**
 * Render the User Manager Page

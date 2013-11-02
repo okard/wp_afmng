@@ -17,6 +17,7 @@ define('AFMNG_DEBUG', true);
 //Libraries
 include_once(AFMNG_PLUGINDIR.'/utils.php');
 include_once(AFMNG_PLUGINDIR.'/database.php');
+include_once(AFMNG_PLUGINDIR.'/ajax.php');
 include_once(AFMNG_PLUGINDIR.'/LTemplate.php');
 
 //Plugin Install/Deinstall Functions
@@ -29,7 +30,6 @@ include_once(AFMNG_PLUGINDIR.'/menu.php');
 include_once(AFMNG_PLUGINDIR.'/widget.php');
 
 //Include Ajax API
-
 
 /*
  

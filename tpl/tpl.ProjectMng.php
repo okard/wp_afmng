@@ -45,8 +45,8 @@
 	</table>
 	
 	<form id="frmAddRelease" method="post" action="">
-		<input type="hidden" name="action" value="add_release">
-		<input type="hidden" name="project_id" value="<?php echo $project->project_id; ?>">
+		<input type="hidden" name="action" value="add_release" />
+		<input type="hidden" name="project_id" value="<?php echo $project->project_id; ?>" />
 		
 		<h3>Release hinzufügen</h3>
 		
@@ -69,8 +69,8 @@
 	
 	<h2>Projekt Management</h2>
 	<form id="frmMngProject" method="post" action="">
-		<input type="hidden" name="action" value="update_project">
-		<input type="hidden" name="project_id" value="<?php echo $project->project_id; ?>">
+		<input type="hidden" name="action" value="update_project" />
+		<input type="hidden" name="project_id" value="<?php echo $project->project_id; ?>" />
 		<table>
 			<thead>
 				<tr>
@@ -93,7 +93,7 @@
 
 <h2>Projekt hinzufügen</h2>	
 <form id="frmAddProject" method="post" action="">
-	<input type="hidden" name="action" value="add_project">
+	<input type="hidden" name="action" value="add_project" />
 
 	<table>
 		<thead>

@@ -52,11 +52,13 @@ function afmng_install_db()
 				PRIMARY KEY  (step_id)
 				);
 				CREATE TABLE ".$tbl_release_steps_map." (
+				task_id mediumint(9) NOT NULL AUTO_INCREMENT,
 				release_id mediumint(9) NOT NULL,
 				step_id mediumint(9) NOT NULL,
 				user tinytext NULL,
 				state_no tinyint(1) DEFAULT 0 NOT NULL,
 				description mediumtext NULL,
+				PRIMARY KEY  (task_id),
 				FOREIGN KEY (release_id) REFERENCES $tbl_releases (release_id),
 				FOREIGN KEY (step_id) REFERENCES $tbl_release_steps (step_id)
 				);
