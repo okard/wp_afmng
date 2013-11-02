@@ -31,7 +31,6 @@ function afmng_db_project_list()
 {
 	global $wpdb;
 	
-	
 	return $wpdb->get_results( 
 		"
 		SELECT p.project_id, 
@@ -115,27 +114,14 @@ function afmng_db_user_getcaps($user_id)
 	
 	foreach($caps as $cap)
 		if(user_can($user_id, $cap))
-			array_push($has, $cap);	
+			array_push($has, $cap);
+			
+	if(is_admin())
+		return $caps;
 			
 	return $has;
 }
 
-
-
-function afmng_projects_lastreleases()
-{
-	global $wpdb;
-	
-	return $wpdb->get_results( 
-		"
-		SELECT p.project_id, p.anime_name, r.release_id, MAX(r.creation_date) as creation_date, r.translation_status
-		FROM ".afmngdb::$tbl_projects." as p
-		LEFT JOIN ".afmngdb::$tbl_releases." as r 
-			ON p.project_id = r.project_id
-		ORDER BY p.creation_date DESC
-		"
-	);
-}
 
 /**
 * Add a new anime project
@@ -213,6 +199,7 @@ function afmng_db_gettasks($user)
 			r.episode_no,
 			r.episode_title,
 			s.name,
+			sm.task_id,
 			sm.state_no,
 			sm.description
 		FROM ".afmngdb::$tbl_release_steps_map." as sm
@@ -229,37 +216,56 @@ function afmng_db_gettasks($user)
 }
 
 
-function afmng_db_releases_available($user_id)
+function afmng_db_tasks_available($user_id)
 {
+	$caps = afmng_db_user_getcaps($user_id);
 	
-	//afmng_db_user_getcaps($user_id)
-	// get_userdata( $userid );
-	//usr is admin
-	//afmng_db_user_getcaps for user
+	global $wpdb;
 	
-	/*
-	 SELECT 
-			anime,
-			episode
-			step_id, 
-			name 
-	 FROM tbl_release_steps as s
-	 * 
-	 LEFT JOIN tbl_anime as p
-	 LEFT JOIN tbl_releases as r
-	 LEFT JOIN tbl_release_map as sm
-		//null
-		//
-	*/
+	$sql =
+		"
+		SELECT
+			p.anime_name,
+			r.episode_no,
+			r.episode_title,
+			s.name
+		FROM ".afmngdb::$tbl_release_steps_map." as sm
+		INNER JOIN ".afmngdb::$tbl_release_steps." as s
+			ON s.step_id = sm.step_id
+		INNER JOIN ".afmngdb::$tbl_releases." as r 
+			ON sm.release_id = r.release_id
+		INNER JOIN ".afmngdb::$tbl_projects." as p
+			ON p.project_id = r.project_id
+		WHERE (sm.user IS NULL OR sm.user = '')
+		AND s.capability IN ('".implode("','",$caps)."')
+		"
+		;
 	
-	//anime_name
-	//episode
-	//step
+	$results = $wpdb->get_results($sql);
 	
-	//if admin each step is available
-	//display only steps when prev_id exists and state_no == 2
 	
-	//assign / create step button
+	//get tasks which user can create
+	$sql =
+		"
+		SELECT
+			p.anime_name,
+			r.episode_no,
+			r.episode_title,
+			s.name
+		FROM ".afmngdb::$tbl_release_steps." as s
+		INNER JOIN ".afmngdb::$tbl_release_steps_map." as sm
+			ON s.prev_step_id = MAX(sm.step_id) 
+		INNER JOIN ".afmngdb::$tbl_releases." as r 
+			ON sm.release_id = r.release_id
+		INNER JOIN ".afmngdb::$tbl_projects." as p
+			ON p.project_id = r.project_id
+		WHERE s.capability IN ('".implode("','",$caps)."')
+		"
+		;
+	
+	//array_push($results, $wpdb->get_results($sql));
+	
+	return $results;
 }
 
 /**
@@ -283,23 +289,37 @@ function afmng_db_steps()
 function afmng_db_task_add($release_id, $step_id, $user)
 {
 	global $wpdb;
-	
-	if($user == '')
-		$user = null;
 
-	$wpdb->insert( 
-		afmngdb::$tbl_release_steps_map, 
-		array( 
-			'release_id' => $release_id,
-			'step_id' => $step_id,
-			'user' => $user
-		), 
-		array( 
-			'%d',
-			'%d',
-			'%s'
-		) 
-	);
+	if( $user == '')
+	{
+		$wpdb->insert( 
+			afmngdb::$tbl_release_steps_map, 
+			array( 
+				'release_id' => $release_id,
+				'step_id' => $step_id,
+				'user' => $user
+			), 
+			array( 
+				'%d',
+				'%d',
+				'%s'
+			) 
+		);
+	}
+	else
+	{
+		$wpdb->insert( 
+			afmngdb::$tbl_release_steps_map, 
+			array( 
+				'release_id' => $release_id,
+				'step_id' => $step_id
+			), 
+			array( 
+				'%d',
+				'%d'
+			) 
+		);
+	}
 }
 
 ?>

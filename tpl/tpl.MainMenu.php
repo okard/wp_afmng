@@ -43,6 +43,28 @@
 
 <!-- if admin add option to add any tasks -->
 
+<table>
+	<thead>
+		<tr>
+			<th>Anime</th>
+			<th>Episode</th>
+			<th>Step</th>
+			<th><!--Actions--></th>
+		</tr>
+	</thead>
+	
+	<?php foreach($this->tasks_available as $task): ?>
+		<tr>
+			<td><?php echo $task->anime_name; ?></td>
+			<td><?php echo $task->episode_no, ' / ', $task->episode_title; ?></td>
+			<td><?php echo $task->name; ?></td>
+			<td>Annehmen Löschen</td>
+		</tr>
+	<?php endforeach; ?>
+	
+
+</table>
+
 <h2>Abgeschlossene Aufgaben</h2>
 
 <?php if($this->is_admin): ?>

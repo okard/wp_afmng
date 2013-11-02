@@ -41,6 +41,8 @@ function afmng_menu_tasks()
 	$ltpl->tasks = afmng_db_gettasks($current_user->user_login);
 	$ltpl->user = $current_user->user_login;
 	
+	$ltpl->tasks_available =  afmng_db_tasks_available($current_user->ID);
+	
 	//own tasks
 	
 	$ltpl->is_admin = is_admin();

@@ -12,9 +12,17 @@ function afmng_tasks_animeselect()
 	// We can also pass the url value separately from ajaxurl for front end AJAX implementations
 	jQuery.post(ajaxurl, data, function(response) 
 	{
+		//alert(response);
 		jQuery('#cmb_episode').empty();
-			
-		var data = JSON.parse(response);
+		try
+		{
+			var data = JSON.parse(response);
+		}
+		catch(e)
+		{
+			alert(e + '\n' + response);
+		}
+	
 		for (var i=0; i<data.length; i++) 
 		{
 			var option = jQuery('<option />');
