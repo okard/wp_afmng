@@ -1,4 +1,4 @@
-
+<div id="afmng_body">
 <h1>Anime Fansub Manager</h1>
 
 <div id="task_current">
@@ -122,4 +122,5 @@
 	
 	</form>
 <?php endif; ?>
+</div>
 </div>

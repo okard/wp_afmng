@@ -1,24 +1,35 @@
-.project_box{
+h2 {
+padding-bottom: 5px;
+border-bottom: solid 1px #CCCCCC;
+}
+#afmng_body{
+padding: 20px;
+margin: 20px;
+border: solid 1px #CCCCCC;
+}
 
+.project_box{
+padding: 20px 0 20px 0;
 }
 
 #project_add{
-
+padding: 20px 0 20px 0;
 }
 
 #task_current{
-
+padding: 20px 0 20px 0;
 }
 
 #task_available{
+padding: 20px 0 20px 0;
 
 }
 
 #task_done{
-
+padding: 20px 0 20px 0;
 }
 
 #task_random{
-
+padding: 20px 0 20px 0;
 }
 

@@ -1,3 +1,4 @@
+<div id="afmng_body">
 
 <h1>Project Manager</h1>
 
@@ -105,4 +106,4 @@
 	</table>
 </form>
 </div>
-
+</div>
