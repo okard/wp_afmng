@@ -24,6 +24,22 @@ function afmng_menu_setup()
 }
 
 /**
+* Stylesheets and scripts
+*/
+add_action( 'admin_enqueue_scripts', 'afmng_menu_script_styles');
+function afmng_menu_script_styles($hook) 
+{
+	wp_register_style( 'afmng_plugin_css', plugins_url('afmng/tpl/style.css'), false, '1.0.0' );
+    wp_enqueue_style( 'afmng_plugin_css' );
+    
+	//page=afmng_menu_tasks
+    wp_enqueue_script('afmng_menu_tasks_scripts', plugins_url('afmng/js/tasks.js') );
+}
+
+
+
+
+/**
 * Renders the AFMNG main menu
 */
 function afmng_menu_tasks()
@@ -68,17 +84,6 @@ function afmng_menu_tasks_postback()
 			break;
 	}
 }
-
-/**
-* Tasks Scripts
-*/
-add_action( 'admin_enqueue_scripts', 'afmng_menu_tasks_scripts');
-function afmng_menu_tasks_scripts($hook) 
-{
-	//page=afmng_menu_tasks
-    wp_enqueue_script('afmng_menu_tasks_scripts', plugins_url('afmng/js/tasks.js') );
-}
-
 
 /**
 * Render the Project Manager Page
