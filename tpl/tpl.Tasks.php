@@ -1,6 +1,8 @@
 
 <h1>Anime Fansub Manager</h1>
 
+<div id="task_current">
+
 <h2>Meine aktuellen Aufgaben (<?php echo $this->user; ?>)</h2>
 
 <table>
@@ -35,8 +37,11 @@
 	</tr>
 	<?php endforeach; ?>
 </table>
+</div>
 
 <!-- Hidden Form -->
+
+<div id="task_available">
 			
 <h2>Verfügbare Aufgaben</h2>
 <!-- available releases and follow releases when the step before is done -->
@@ -64,9 +69,14 @@
 	
 
 </table>
+</div>
+
+<div id="task_done">
 
 <h2>Abgeschlossene Aufgaben</h2>
+</div>
 
+<div id="task_random">
 <?php if($this->is_admin): ?>
 	<h2>Beliebige Aufgabe hinzufügen</h2>
 	
@@ -112,4 +122,4 @@
 	
 	</form>
 <?php endif; ?>
-
+</div>

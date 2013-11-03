@@ -1,7 +1,6 @@
 
 <h1>Project Manager</h1>
 
-
 <?php foreach($this->project_list as $project): ?>
 	<div class="project_box">
 	<h1><?php echo $project->anime_name; ?></h1>
