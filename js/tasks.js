@@ -26,7 +26,7 @@ function afmng_tasks_animeselect()
 		for (var i=0; i<data.length; i++) 
 		{
 			var option = jQuery('<option />');
-			option.attr('value', data[i]['release_id']).text(data[i]['episode_title']);
+			option.attr('value', data[i]['release_id']).text(data[i]['episode_no']+' / '+data[i]['episode_title']);
 			jQuery('#cmb_episode').append(option);
 		}
 	});

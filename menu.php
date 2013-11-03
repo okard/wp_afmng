@@ -48,7 +48,7 @@ function afmng_menu_tasks()
 	$ltpl->is_admin = is_admin();
 	
 	//render template
-	$ltpl->render(afmng_get_tplfile('tpl.MainMenu.php'));
+	$ltpl->render(afmng_get_tplfile('tpl.Tasks.php'));
 }
 
 /**

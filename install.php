@@ -22,28 +22,28 @@ function afmng_install_db()
 	{
 		
 		//get table names
-		$tbl_projects =  afmngdb::$tbl_projects;
-		$tbl_releases =  afmngdb::$tbl_releases;
-		$tbl_release_steps = afmngdb::$tbl_release_steps;
-		$tbl_release_steps_map = afmngdb::$tbl_release_steps_map;
+		$tbl_anime =  afmngdb::$tbl_anime;
+		$tbl_episode =  afmngdb::$tbl_episode;
+		$tbl_steps = afmngdb::$tbl_steps;
+		$tbl_tasks = afmngdb::$tbl_tasks;
 		
 		//sql script
-		$sql = "CREATE TABLE ".$tbl_projects." (
+		$sql = "CREATE TABLE ".$tbl_anime." (
 				project_id mediumint(9) NOT NULL AUTO_INCREMENT,
 				anime_name tinytext NOT NULL,
 				completed BOOLEAN default 0 NOT NULL,
 				licensed BOOLEAN default 0 NOT NULL,
 				PRIMARY KEY  (project_id)
 				);
-				CREATE TABLE ".$tbl_releases." (
+				CREATE TABLE ".$tbl_episode." (
 				release_id mediumint(9) NOT NULL AUTO_INCREMENT,
 				project_id mediumint(9) NOT NULL,
 				episode_no tinytext NOT NULL,
 				episode_title text NULL,
 				PRIMARY KEY  (release_id),
-				FOREIGN KEY (project_id) REFERENCES $tbl_projects (project_id)
+				FOREIGN KEY (project_id) REFERENCES $tbl_anime (project_id)
 				);
-				CREATE TABLE ".$tbl_release_steps." (
+				CREATE TABLE ".$tbl_steps." (
 				step_id mediumint(9) NOT NULL AUTO_INCREMENT,
 				prev_step_id mediumint(9) NULL,
 				name tinytext NOT NULL,
@@ -51,7 +51,7 @@ function afmng_install_db()
 				capability tinytext NULL,
 				PRIMARY KEY  (step_id)
 				);
-				CREATE TABLE ".$tbl_release_steps_map." (
+				CREATE TABLE ".$tbl_tasks." (
 				task_id mediumint(9) NOT NULL AUTO_INCREMENT,
 				release_id mediumint(9) NOT NULL,
 				step_id mediumint(9) NOT NULL,
@@ -59,8 +59,8 @@ function afmng_install_db()
 				state_no tinyint(1) DEFAULT 0 NOT NULL,
 				description mediumtext NULL,
 				PRIMARY KEY  (task_id),
-				FOREIGN KEY (release_id) REFERENCES $tbl_releases (release_id),
-				FOREIGN KEY (step_id) REFERENCES $tbl_release_steps (step_id)
+				FOREIGN KEY (release_id) REFERENCES $tbl_episode (release_id),
+				FOREIGN KEY (step_id) REFERENCES $tbl_steps (step_id)
 				);
 				";
 				
@@ -79,7 +79,7 @@ function afmng_install_db()
 function afmng_db_add_step($step_id, $prev_step, $name, $desc, $cap)
 {
 	global $wpdb;
-	$wpdb->insert( afmngdb::$tbl_release_steps,  array( 
+	$wpdb->insert( afmngdb::$tbl_steps,  array( 
 			'step_id' => $step_id,
 			'prev_step_id' => $prev_step, 
 			'name' => $name,
