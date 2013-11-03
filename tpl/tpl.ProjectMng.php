@@ -3,7 +3,7 @@
 
 
 <?php foreach($this->project_list as $project): ?>
-	<div class="project_box" style="border:1px solid black">
+	<div class="project_box">
 	<h1><?php echo $project->anime_name; ?></h1>
 	
 	<p>Releases:</p>
@@ -66,7 +66,6 @@
 		</table>
 	</form>
 	
-	
 	<h2>Projekt Management</h2>
 	<form id="frmMngProject" method="post" action="">
 		<input type="hidden" name="action" value="update_project" />
@@ -91,6 +90,7 @@
 	</div>
 <?php endforeach; ?>
 
+<div id="project_add">
 <h2>Projekt hinzufügen</h2>	
 <form id="frmAddProject" method="post" action="">
 	<input type="hidden" name="action" value="add_project" />
@@ -105,5 +105,5 @@
 		</tr>
 	</table>
 </form>
-
+</div>
 
