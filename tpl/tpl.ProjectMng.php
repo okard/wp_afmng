@@ -16,6 +16,7 @@
 			</tr>
 		</thead>
 	<?php foreach(afmng_db_project_releases( $project->project_id) as $release): ?>
+		<?php $steps = afmng_db_release_steps($release->release_id) ?>
 		<tr>
 			<td><?php echo $release->episode_no; ?></td>
 			<td><?php echo $release->episode_title; ?></td>
@@ -23,20 +24,16 @@
 				<table>
 					<thead>
 						<tr>
-						<th>Schritt</th>
-						<th>Benutzer</th>
-						<th>Status</th>
-						<th>Beschreibung</th>
+						<?php foreach($steps as $step): ?>
+							<th><?php echo $step->step_name; ?></th>
+						<?php endforeach; ?>
 						</tr>
 					</thead>
-				<?php foreach(afmng_db_release_steps($release->release_id) as $step): ?>
-					<tr>
-						<td><?php echo $step->step_name; ?></td>
-						<td><?php echo $step->user; ?></td>
-						<td><?php echo afmng_db_steps_state($step->state_no); ?></td>
-						<td><?php echo $step->description; ?></td>
-					</tr>
-				<?php endforeach; ?>
+					<?php foreach($steps as $step): ?>
+						<tr>
+							<td><span class="status_<?php echo afmng_db_steps_state($step->state_no); ?>"><?php echo $step->user; ?></span></td>
+						</tr>
+					<?php endforeach; ?>
 				</table>
 			</td>
 		</tr>
