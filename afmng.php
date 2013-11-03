@@ -11,6 +11,7 @@
  
 define('AFMNG_PLUGINDIR', plugin_dir_path( __FILE__ ));
 define('AFMNG_PLUGINFILE', __FILE__);
+define('AFMNG_PLUGINURL', plugins_url('/', __FILE__));
 define('AFMNG_DEBUG', true);
 
 
