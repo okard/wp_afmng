@@ -290,7 +290,7 @@ function afmng_db_task_add($release_id, $step_id, $user)
 {
 	global $wpdb;
 
-	if( $user != '')
+	if(!empty($user))
 	{
 		$wpdb->insert( 
 			afmngdb::$tbl_tasks, 

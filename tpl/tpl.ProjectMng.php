@@ -29,11 +29,11 @@
 						<?php endforeach; ?>
 						</tr>
 					</thead>
+					<tr>
 					<?php foreach($steps as $step): ?>
-						<tr>
-							<td><span class="status_<?php echo afmng_db_steps_state($step->state_no); ?>"><?php echo $step->user; ?></span></td>
-						</tr>
+						<td><span class="status_<?php echo afmng_db_steps_state($step->state_no); ?>"><?php echo empty($step->user) ? '(Offen)' : $step->user; ?></span></td>
 					<?php endforeach; ?>
+					</tr>
 				</table>
 			</td>
 		</tr>
