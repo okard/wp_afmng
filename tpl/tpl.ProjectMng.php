@@ -21,7 +21,10 @@
 		<?php $steps = afmng_db_release_steps($release->release_id) ?>
 		<tr>
 			<td><?php echo $release->episode_no; ?></td>
-			<td><?php echo $release->episode_title; ?><div class="button_delete"></div></td>
+			<td>
+				<?php echo $release->episode_title; ?>
+				<a href="#" title="Löschen" onclick="return false;"><div class="button_delete"></div></a>
+			</td>
 			<td>
 				<table>
 					<thead>
@@ -83,7 +86,7 @@
 				<td><input type="checkbox" name="completed" /></td>
 				<td><input type="checkbox" name="licensed" /></td>
 				<td><input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Speichern') ?>" /></td>
-				<td><input type="button" name="Delete" class="button-primary" value="Löschen" /></td>
+				<td><input type="button" name="Delete" class="button-primary" value="Löschen" onclick="afmng_project_delete(<?php echo $project->project_id; ?>);" /></td>
 			</tr>
 		</table>
 	</form>

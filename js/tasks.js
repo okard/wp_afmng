@@ -35,10 +35,50 @@ function afmng_tasks_animeselect()
 
 jQuery(document).ready(function($) 
 {
+	//register anime select 
 	$("#cmb_anime").change(afmng_tasks_animeselect);
 	$('#cmb_anime option:first').removeAttr('selected');
 	$("#cmb_anime").trigger("change");
-	
 });
 
+
+/**
+* Update a task for a user
+*/
+function afmng_tasks_update(task_id)
+{
+	
+	//extract state_no
+	//extract description
+	var state_no = jQuery("#state_no["+task_id+"]").val();
+	var description = jQuery("#description["+task_id+"]").val();
+	
+	//ajax request
+	var data = {
+		action: 'task_update',
+		task_id: task_id,
+		state_no: state_no,
+		description: description
+	};
+	
+	// We can also pass the url value separately from ajaxurl for front end AJAX implementations
+	jQuery.post(ajaxurl, data, function(response) 
+	{
+		try
+		{
+			var data = JSON.parse(response);
+			
+			//check for errors
+			alert(data);
+			
+			
+			//dummy submit
+			jQuery("#dummyForm").submit();
+		}
+		catch(e)
+		{
+			alert(e + '\n' + response);
+		}
+	});
+}
 

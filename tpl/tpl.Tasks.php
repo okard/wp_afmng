@@ -35,7 +35,7 @@
 			</form>
 		</td>
 		<td><input id="description[<?php echo $task->task_id; ?>]" type="text" name="description" value="<?php echo $task->description; ?>" /></td>
-		<td>Speichern</td>
+		<td><a href="#" onclick="afmng_tasks_update(<?php echo $task->task_id;?>); return false;">Speichern</a></td>
 	</tr>
 	<?php endforeach; ?>
 </table>
@@ -65,7 +65,12 @@
 			<td><?php echo $task->anime_name; ?></td>
 			<td><?php echo $task->episode_no, ' / ', $task->episode_title; ?></td>
 			<td><?php echo $task->name; ?></td>
-			<td>Annehmen Löschen</td>
+			<td>
+				<a href="#" onclick="return false;">Annehmen</a>
+				<?php if($this->is_admin):  ?>
+					<a href="#" onclick="return false;">Löschen</a>
+				<?php endif;  ?>
+			</td>
 		</tr>
 	<?php endforeach; ?>
 	
