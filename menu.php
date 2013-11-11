@@ -32,8 +32,19 @@ function afmng_menu_script_styles($hook)
 	wp_register_style( 'afmng_plugin_css', AFMNG_PLUGINURL.'tpl/style.css', false, '1.0.0' );
     wp_enqueue_style( 'afmng_plugin_css' );
     
-	//page=afmng_menu_tasks
-    wp_enqueue_script('afmng_menu_tasks_scripts', AFMNG_PLUGINURL.'js/tasks.js');
+    //for confirmation boxes
+    wp_enqueue_script('afmng_plugin_jconfirm', AFMNG_PLUGINURL.'js/jquery.jconfirm-1.0.min.js');
+    
+	switch($_GET["page"])
+	{
+		case 'afmng_menu_tasks':
+			wp_enqueue_script('afmng_menu_tasks_scripts', AFMNG_PLUGINURL.'js/tasks.js');
+			break;
+				
+		case 'afmng_menu_projectmng':
+			wp_enqueue_script('afmng_menu_projectmng_scripts', AFMNG_PLUGINURL.'js/projectmng.js');
+			break;
+	}
 }
 
 

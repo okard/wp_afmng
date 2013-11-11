@@ -33,3 +33,11 @@ padding: 20px 0 20px 0;
 padding: 20px 0 20px 0;
 }
 
+
+div.button_delete{
+	background-image: url(./icon_delete.png);
+	background-size:100%;
+	width:16px;
+	height:16px;
+	display:inline-block;
+}

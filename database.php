@@ -9,6 +9,7 @@ class afmngdb
 	
 	
 	public static $step_state = array(0 => 'Offen', 1 => 'In Bearbeitung', 2 => 'Erledigt');
+	//TODO: Rückesprache erforderlich?
 
     public static function setup() 
     {
@@ -71,7 +72,8 @@ function afmng_db_release_steps($releaseid)
 	
 	$sql = $wpdb->prepare( 
 		"
-		SELECT sm.step_id,
+		SELECT sm.task_id,
+			   sm.step_id,
 			   s.name as step_name,
 			   sm.user,
 			   sm.state_no,
@@ -321,5 +323,10 @@ function afmng_db_task_add($release_id, $step_id, $user)
 		);
 	}
 }
+
+//delete
+
+//update task
+
 
 ?>

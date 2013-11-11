@@ -1,6 +1,8 @@
 <div id="afmng_body">
 <h1>Anime Fansub Manager</h1>
 
+<form id="dummyForm" method="post" action=""></form>
+
 <div id="task_current">
 
 <h2>Meine aktuellen Aufgaben (<?php echo $this->user; ?>)</h2>
@@ -25,14 +27,14 @@
 		<td><?php echo $task->name; ?></td>
 		<td>
 			<form>
-			<select name="state_no">
+			<select id="state_no[<?php echo $task->task_id; ?>]" name="state_no">
 				<?php foreach(afmngdb::$step_state as $key => $value): ?>
 					<option value="<?php echo $key; ?>" <?php echo $key == $task->state_no ? 'selected' : '' ?>><?php echo $value; ?></option>
 				<?php endforeach; ?>
 			</select>
 			</form>
 		</td>
-		<td><?php echo $task->description; ?></td>
+		<td><input id="description[<?php echo $task->task_id; ?>]" type="text" name="description" value="<?php echo $task->description; ?>" /></td>
 		<td>Speichern</td>
 	</tr>
 	<?php endforeach; ?>

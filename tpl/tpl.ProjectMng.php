@@ -2,6 +2,8 @@
 
 <h1>Project Manager</h1>
 
+<form id="dummyForm" method="post" action=""></form>
+
 <?php foreach($this->project_list as $project): ?>
 	<div class="project_box">
 	<h1><?php echo $project->anime_name; ?></h1>
@@ -19,7 +21,7 @@
 		<?php $steps = afmng_db_release_steps($release->release_id) ?>
 		<tr>
 			<td><?php echo $release->episode_no; ?></td>
-			<td><?php echo $release->episode_title; ?></td>
+			<td><?php echo $release->episode_title; ?><div class="button_delete"></div></td>
 			<td>
 				<table>
 					<thead>
@@ -31,7 +33,7 @@
 					</thead>
 					<tr>
 					<?php foreach($steps as $step): ?>
-						<td><span class="status_<?php echo afmng_db_steps_state($step->state_no); ?>"><?php echo empty($step->user) ? '(Offen)' : $step->user; ?></span></td>
+						<td><span class="status_<?php echo afmng_db_steps_state($step->state_no); ?>"><?php echo empty($step->user) ? '(Offen)' : $step->user; ?></span><a href='javascript:;' title="<?php echo $step->description; ?>">&nbsp;</a></td>
 					<?php endforeach; ?>
 					</tr>
 				</table>
@@ -81,6 +83,7 @@
 				<td><input type="checkbox" name="completed" /></td>
 				<td><input type="checkbox" name="licensed" /></td>
 				<td><input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Speichern') ?>" /></td>
+				<td><input type="button" name="Delete" class="button-primary" value="Löschen" /></td>
 			</tr>
 		</table>
 	</form>
