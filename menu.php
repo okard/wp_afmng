@@ -103,6 +103,10 @@ function afmng_menu_projectmng()
 {
 	//right check
 	
+	//create subpages?
+	//-project (single project + episodes)
+	//-episode (single episode + tasks)
+	
 	if(afmng_check_post())
 		afmng_menu_projectmng_postback();
 	

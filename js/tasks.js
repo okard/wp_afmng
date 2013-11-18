@@ -128,6 +128,9 @@ function afmng_tasks_accept(task_id)
 	});
 }
 
+//afmng_tasks_create_assign
+
+
 /**
 * Delete a task
 */ 

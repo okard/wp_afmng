@@ -8,7 +8,31 @@
 	<div class="project_box">
 	<h1><?php echo $project->anime_name; ?></h1>
 	
-	<p>Releases:</p>
+	<h3><a href="#" onclick="jQuery('#frmMngProject').toggle('slow'); return false;">Projekt Management</a></h3>
+	<form id="frmMngProject" method="post" action="" style="display:none">
+		<input type="hidden" name="action" value="update_project" />
+		<input type="hidden" name="project_id" value="<?php echo $project->project_id; ?>" />
+		<table>
+			<thead>
+				<tr>
+				<th><label for="anime_name">Anime-Name</label></th>
+				<th><label for="completed">Abgeschlossen</label></th>
+				<th><label for="licensed">Lizensiert</label></th>
+				<th></th>
+				</tr>
+			</thead>
+			<tr>
+				<td><input name="anime_name" type="text" value="<?php echo $project->anime_name; ?>" /></td>
+				<td><input name="completed" type="checkbox" /></td>
+				<td><input name="licensed" type="checkbox" /></td>
+				<td><input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Speichern') ?>" /></td>
+				<td><input type="button" name="Delete" class="button-primary" value="Löschen" onclick="afmng_project_delete(<?php echo $project->project_id; ?>);" /></td>
+			</tr>
+		</table>
+	</form>
+	
+	
+	<h2>Releases</h2>
 	
 	<table>
 		<thead>
@@ -46,11 +70,13 @@
 	<?php endforeach; ?>
 	</table>
 	
-	<form id="frmAddRelease" method="post" action="">
+	
+	
+	<h3><a href="#" onclick="jQuery('#frmAddRelease').toggle('slow'); return false;">Release hinzufügen</a></h3>
+	
+	<form id="frmAddRelease" method="post" action="" style="display:none">
 		<input type="hidden" name="action" value="add_release" />
 		<input type="hidden" name="project_id" value="<?php echo $project->project_id; ?>" />
-		
-		<h3>Release hinzufügen</h3>
 		
 		<table>
 			<thead>
@@ -65,29 +91,6 @@
 				<td><input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Hinzufügen') ?>" /></td>
 			</tr>
 		
-		</table>
-	</form>
-	
-	<h2>Projekt Management</h2>
-	<form id="frmMngProject" method="post" action="">
-		<input type="hidden" name="action" value="update_project" />
-		<input type="hidden" name="project_id" value="<?php echo $project->project_id; ?>" />
-		<table>
-			<thead>
-				<tr>
-				<th><label for="anime_name">Anime-Name</label></th>
-				<th><label for="completed">Abgeschlossen</label></th>
-				<th><label for="licensed">Lizensiert</label></th>
-				<th></th>
-				</tr>
-			</thead>
-			<tr>
-				<td><input name="anime_name" type="text" value="<?php echo $project->anime_name; ?>" /></td>
-				<td><input name="completed" type="checkbox" /></td>
-				<td><input name="licensed" type="checkbox" /></td>
-				<td><input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Speichern') ?>" /></td>
-				<td><input type="button" name="Delete" class="button-primary" value="Löschen" onclick="afmng_project_delete(<?php echo $project->project_id; ?>);" /></td>
-			</tr>
 		</table>
 	</form>
 	</div>

@@ -352,6 +352,7 @@ function afmng_db_gettasks($user)
 		WHERE
 			sm.user = '$user'
 		AND NOT (p.completed = true OR p.licensed = true)
+		AND NOT sm.state_no = 2
 		"
 	);
 }
