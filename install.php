@@ -49,6 +49,7 @@ function afmng_install_db()
 				name tinytext NOT NULL,
 				description mediumtext NULL,
 				capability tinytext NULL,
+				multiple BOOLEAN default 0 NOT NULL,
 				PRIMARY KEY  (step_id)
 				);
 				CREATE TABLE ".$tbl_tasks." (

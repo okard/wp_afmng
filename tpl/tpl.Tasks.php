@@ -35,7 +35,10 @@
 			</form>
 		</td>
 		<td><input id="description[<?php echo $task->task_id; ?>]" type="text" name="description" value="<?php echo $task->description; ?>" /></td>
-		<td><a href="#" onclick="afmng_tasks_update(<?php echo $task->task_id;?>); return false;">Speichern</a></td>
+		<td>
+			<a href="#" onclick="afmng_tasks_update(<?php echo $task->task_id;?>); return false;">Speichern</a>
+			<a href="#" onclick="afmng_tasks_release(<?php echo $task->task_id;?>); return false;">Freigeben</a>
+		</td>
 	</tr>
 	<?php endforeach; ?>
 </table>

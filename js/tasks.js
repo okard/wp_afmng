@@ -47,7 +47,6 @@ jQuery(document).ready(function($)
 */
 function afmng_tasks_update(task_id)
 {
-	
 	//extract state_no
 	//extract description
 	var state_no = jQuery("#state_no["+task_id+"]").val();
@@ -71,6 +70,37 @@ function afmng_tasks_update(task_id)
 			//check for errors
 			alert(data);
 			
+			//dummy submit
+			jQuery("#dummyForm").submit();
+		}
+		catch(e)
+		{
+			alert(e + '\n' + response);
+		}
+	});
+}
+
+
+/**
+* assign the current task to user
+*/
+function afmng_tasks_accept(task_id)
+{
+	//ajax request
+	var data = {
+		action: 'task_accept',
+		task_id: task_id
+	};
+	
+	// We can also pass the url value separately from ajaxurl for front end AJAX implementations
+	jQuery.post(ajaxurl, data, function(response) 
+	{
+		try
+		{
+			var data = JSON.parse(response);
+			
+			//check for errors
+			alert(data);
 			
 			//dummy submit
 			jQuery("#dummyForm").submit();
@@ -82,3 +112,4 @@ function afmng_tasks_update(task_id)
 	});
 }
 
+//tasks delete

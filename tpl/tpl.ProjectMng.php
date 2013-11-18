@@ -23,7 +23,7 @@
 			<td><?php echo $release->episode_no; ?></td>
 			<td>
 				<?php echo $release->episode_title; ?>
-				<a href="#" title="Löschen" onclick="return false;"><div class="button_delete"></div></a>
+				<a href="#" title="Löschen" onclick="afmng_release_delete(<?php echo $release->release_id; ?>);return false;"><div class="button_delete"></div></a>
 			</td>
 			<td>
 				<table>
@@ -83,8 +83,8 @@
 			</thead>
 			<tr>
 				<td><input name="anime_name" type="text" value="<?php echo $project->anime_name; ?>" /></td>
-				<td><input type="checkbox" name="completed" /></td>
-				<td><input type="checkbox" name="licensed" /></td>
+				<td><input name="completed" type="checkbox" /></td>
+				<td><input name="licensed" type="checkbox" /></td>
 				<td><input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Speichern') ?>" /></td>
 				<td><input type="button" name="Delete" class="button-primary" value="Löschen" onclick="afmng_project_delete(<?php echo $project->project_id; ?>);" /></td>
 			</tr>

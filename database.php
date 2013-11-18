@@ -25,6 +25,10 @@ class afmngdb
 afmngdb::setup();
 $afmngdb = 'afmngdb';
 
+
+//======================================================================
+//project functions:
+
 /**
 * Return a project list
 */
@@ -61,67 +65,6 @@ function afmng_db_project_releases($projectid)
         );
         
 	return $wpdb->get_results($sql);
-}
-
-/**
-* get steps of a release
-*/
-function afmng_db_release_steps($releaseid)
-{
-	global $wpdb;
-	
-	$sql = $wpdb->prepare( 
-		"
-		SELECT sm.task_id,
-			   sm.step_id,
-			   s.name as step_name,
-			   sm.user,
-			   sm.state_no,
-			   sm.description
-		FROM ".afmngdb::$tbl_tasks." as sm
-		INNER JOIN ".afmngdb::$tbl_steps." as s
-			ON s.step_id = sm.step_id	
-		WHERE sm.release_id=%d
-		ORDER BY sm.step_id ASC
-		",
-		$releaseid
-        );
-        
-	return $wpdb->get_results($sql);
-}
-
-/**
-* Get strings for state
-*/
-function afmng_db_steps_state($state_no)
-{
-	return afmngdb::$step_state[$state_no];
-}
-
-/**
-* Check caps for current user
-*/
-function afmng_db_user_getcaps($user_id)
-{
-	$caps = array('afmng_rawprovider',
-	              'afmng_translator',
-	              'afmng_edit',
-	              'afmng_typeset',
-	              'afmng_karaoke',
-	              'afmng_qc',
-	              'afmng_mux',
-	              'afmng_hardsub');
-	
-	$has = array();
-	
-	foreach($caps as $cap)
-		if(user_can($user_id, $cap))
-			array_push($has, $cap);
-			
-	if(is_admin())
-		return $caps;
-			
-	return $has;
 }
 
 
@@ -164,6 +107,49 @@ function afmng_project_update($project_id, $name, $completed, $licensed)
     );
 }
 
+
+/**
+* Update a project
+*/
+function afmng_project_delete($project_id)
+{
+	global $wpdb;
+	
+	$wpdb->delete(afmngdb::$tbl_anime, array( 'project_id' => $project_id ), array( '%d' ) );
+}
+
+
+
+//======================================================================
+//release functions:
+
+/**
+* get steps of a release
+*/
+function afmng_db_release_steps($releaseid)
+{
+	global $wpdb;
+	
+	$sql = $wpdb->prepare( 
+		"
+		SELECT sm.task_id,
+			   sm.step_id,
+			   s.name as step_name,
+			   sm.user,
+			   sm.state_no,
+			   sm.description
+		FROM ".afmngdb::$tbl_tasks." as sm
+		INNER JOIN ".afmngdb::$tbl_steps." as s
+			ON s.step_id = sm.step_id	
+		WHERE sm.release_id=%d
+		ORDER BY sm.step_id ASC
+		",
+		$releaseid
+        );
+        
+	return $wpdb->get_results($sql);
+}
+
 /**
 * Add a new anime release (episode)
 */
@@ -186,6 +172,112 @@ function afmng_db_release_add($project_id, $episode_no, $episode_title)
 	);
 }
 
+/**
+* Delete a release/episode
+*/
+function afmng_db_release_delete($release_id)
+{
+	global $wpdb;
+	
+	$wpdb->delete(afmngdb::$tbl_episode, array( 'release_id' => $release_id ), array( '%d' ) );
+
+	return true;
+}
+
+//======================================================================
+//step functions:
+
+/**
+* Return all available steps
+*/
+function afmng_db_steps()
+{
+	global $wpdb;	
+	
+	return $wpdb->get_results( 
+		"
+		SELECT
+			s.step_id,
+			s.name
+		FROM ".afmngdb::$tbl_steps." as s
+		"
+	);
+}
+
+//======================================================================
+//tasks functions:
+
+function afmng_db_task_add($release_id, $step_id, $user)
+{
+	global $wpdb;
+
+	if(!empty($user))
+	{
+		$wpdb->insert( 
+			afmngdb::$tbl_tasks, 
+			array( 
+				'release_id' => $release_id,
+				'step_id' => $step_id,
+				'user' => $user
+			), 
+			array( 
+				'%d',
+				'%d',
+				'%s'
+			) 
+		);
+	}
+	else
+	{
+		$wpdb->insert( 
+			afmngdb::$tbl_tasks, 
+			array( 
+				'release_id' => $release_id,
+				'step_id' => $step_id
+			), 
+			array( 
+				'%d',
+				'%d'
+			) 
+		);
+	}
+}
+
+//delete task
+function afmng_db_task_delete($task_id)
+{
+	global $wpdb;
+	
+	$wpdb->delete(afmngdb::$tbl_tasks, array( 'task_id' => $task_id ), array( '%d' ) );
+
+	return true;
+}
+
+
+//update task
+function afmng_db_task_update($task_id, $state_no, $description)
+{
+	global $wpdb;
+	
+	$wpdb->update( 
+		afmngdb::$tbl_tasks, 
+		array( 
+			'state_no' => $state_no,
+			'description' => $description
+		), 
+		array( 'task_id' => $task_id ), 
+		array( 
+			'%d',	// value1
+			'%s'	// value2
+		), 
+		array( '%d' ) 
+	);
+	
+	return true;
+}
+
+//======================================================================
+//special functions:
 
 /**
 * Get active tasks/steps for username
@@ -217,7 +309,9 @@ function afmng_db_gettasks($user)
 	);
 }
 
-
+/**
+* Return tasks which can a user assign
+*/
 function afmng_db_tasks_available($user_id)
 {
 	$caps = afmng_db_user_getcaps($user_id);
@@ -271,62 +365,37 @@ function afmng_db_tasks_available($user_id)
 }
 
 /**
-* Return all available steps
+* Get strings for state
 */
-function afmng_db_steps()
+function afmng_db_steps_state($state_no)
 {
-	global $wpdb;	
+	return afmngdb::$step_state[$state_no];
+}
+
+/**
+* Check caps for current user
+*/
+function afmng_db_user_getcaps($user_id)
+{
+	$caps = array('afmng_rawprovider',
+	              'afmng_translator',
+	              'afmng_edit',
+	              'afmng_typeset',
+	              'afmng_karaoke',
+	              'afmng_qc',
+	              'afmng_mux',
+	              'afmng_hardsub');
 	
-	return $wpdb->get_results( 
-		"
-		SELECT
-			s.step_id,
-			s.name
-		FROM ".afmngdb::$tbl_steps." as s
-		"
-	);
+	$has = array();
+	
+	foreach($caps as $cap)
+		if(user_can($user_id, $cap))
+			array_push($has, $cap);
+			
+	if(is_admin())
+		return $caps;
+			
+	return $has;
 }
-
-
-function afmng_db_task_add($release_id, $step_id, $user)
-{
-	global $wpdb;
-
-	if(!empty($user))
-	{
-		$wpdb->insert( 
-			afmngdb::$tbl_tasks, 
-			array( 
-				'release_id' => $release_id,
-				'step_id' => $step_id,
-				'user' => $user
-			), 
-			array( 
-				'%d',
-				'%d',
-				'%s'
-			) 
-		);
-	}
-	else
-	{
-		$wpdb->insert( 
-			afmngdb::$tbl_tasks, 
-			array( 
-				'release_id' => $release_id,
-				'step_id' => $step_id
-			), 
-			array( 
-				'%d',
-				'%d'
-			) 
-		);
-	}
-}
-
-//delete
-
-//update task
-
 
 ?>

@@ -126,7 +126,7 @@ function afmng_menu_projectmng_postback()
 			break;
 			
 		case 'update_project':
-			afmng_project_update($_POST["project_id"], $_POST["anime_name"], 0, 0 );
+			afmng_project_update($_POST["project_id"], $_POST["anime_name"], isset($_POST['completed']), isset($_POST['licensed']) );
 			break;
 
 		case 'add_release':
