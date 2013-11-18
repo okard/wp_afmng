@@ -128,7 +128,14 @@ function afmng_tasks_accept(task_id)
 	});
 }
 
-//afmng_tasks_create_assign
+
+/**
+* Create a task and assign it to user
+*/
+function afmng_tasks_create_assign()
+{
+	alert("Not yet implemented");
+}
 
 
 /**

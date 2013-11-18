@@ -4,12 +4,19 @@ border-bottom: solid 1px #CCCCCC;
 }
 #afmng_body{
 padding: 20px;
-margin: 20px;
+margin: 0px;
 border: solid 1px #CCCCCC;
 }
 
 .project_box{
 padding: 20px 0 20px 0;
+}
+
+.project_box h1 {
+	background-color: #eee;
+	line-height:1.5em;
+	padding: 0 20px 0 20px;
+	border-bottom: 1px solid blue;
 }
 
 #project_add{
@@ -89,3 +96,48 @@ div.button_delete{
 .step_1 { /* raw should be 0 */
 	background-color:gray;
 } 
+
+
+/* table formatting */
+
+.afmng_table
+{
+	border-collapse: collapse;
+	caption-side:top;
+	padding: 0 1px 0 1px;
+	border: 1px solid #777;
+	empty-cells:show;
+}
+
+.afmng_table thead {
+	border-bottom: 2px solid #777;
+}
+
+.afmng_table th {
+	vertical-align:top;
+	padding:0 5px 0 5px;
+	border-left:1px solid #777;
+}
+
+.afmng_table td {
+	vertical-align:top;
+	border: 1px solid #777;
+	margin:0;
+	padding:0 5px 0 5px;
+}
+
+.afmng_subtable {
+	border-collapse: collapse;
+	border:0px;
+}
+
+.afmng_subtable th {
+	border:0px;
+	padding:0 5px 0 5px;
+	border-left: 1px solid #777;
+}
+.afmng_subtable td {
+	border:0px;
+	padding:0 5px 0 5px;
+	border-left: 1px solid #777;
+}

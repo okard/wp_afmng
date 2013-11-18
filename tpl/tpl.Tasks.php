@@ -7,7 +7,7 @@
 
 <h2>Meine aktuellen Aufgaben (<?php echo $this->user; ?>)</h2>
 
-<table>
+<table class="afmng_table">
 	<thead>
 		<tr>
 		<th>Anime</th>
@@ -51,7 +51,7 @@
 
 <!-- if admin add option to add any tasks -->
 
-<table>
+<table class="afmng_table">
 	<thead>
 		<tr>
 			<th>Anime</th>
@@ -75,7 +75,7 @@
 						<a href="#" onclick="afmng_tasks_delete(<?php echo $task->task_id; ?>); return false;">Löschen</a>
 					<?php endif;  ?>
 				<?php else: ?>
-					<a href="#" onclick="return false;">Anlegen und annehmen</a>
+					<a href="#" onclick="afmng_tasks_create_assign(); return false;">Anlegen und annehmen</a>
 				<?php endif; ?>
 			</td>
 		</tr>

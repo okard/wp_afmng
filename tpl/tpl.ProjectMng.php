@@ -8,8 +8,8 @@
 	<div class="project_box">
 	<h1><?php echo $project->anime_name; ?></h1>
 	
-	<h3><a href="#" onclick="jQuery('#frmMngProject').toggle('slow'); return false;">Projekt Management</a></h3>
-	<form id="frmMngProject" method="post" action="" style="display:none">
+	<h3><a href="#" onclick="jQuery('#frmMngProject\\:<?php echo $project->project_id; ?>').toggle('slow'); return false;">Projekt Management</a></h3>
+	<form id="frmMngProject:<?php echo $project->project_id; ?>" method="post" action="" style="display:none">
 		<input type="hidden" name="action" value="update_project" />
 		<input type="hidden" name="project_id" value="<?php echo $project->project_id; ?>" />
 		<table>
@@ -34,11 +34,12 @@
 	
 	<h2>Releases</h2>
 	
-	<table>
+	<table class="afmng_table">
 		<thead>
 			<tr>
 			<th>Episode</th>
 			<th>Titel</th>
+			<th>Status</th>
 			</tr>
 		</thead>
 	<?php foreach(afmng_db_project_releases( $project->project_id) as $release): ?>
@@ -49,8 +50,8 @@
 				<?php echo $release->episode_title; ?>
 				<a href="#" title="Löschen" onclick="afmng_release_delete(<?php echo $release->release_id; ?>);return false;"><div class="button_delete"></div></a>
 			</td>
-			<td>
-				<table>
+			<td style="margin:0; padding:0;">
+				<table class="afmng_subtable">
 					<thead>
 						<tr>
 						<?php foreach($steps as $step): ?>
@@ -60,7 +61,7 @@
 					</thead>
 					<tr>
 					<?php foreach($steps as $step): ?>
-						<td><span class="status_<?php echo $step->state_no; ?>"><?php echo empty($step->user) ? '(Offen)' : $step->user; ?></span><a href='javascript:;' title="<?php echo $step->description; ?>">&nbsp;</a></td>
+						<td class="status_<?php echo $step->state_no; ?>"><?php echo empty($step->user) ? '(Offen)' : $step->user; ?>  <a href='javascript:;' title="<?php echo $step->description; ?>">&nbsp;</a></td>
 					<?php endforeach; ?>
 					</tr>
 				</table>
@@ -72,9 +73,9 @@
 	
 	
 	
-	<h3><a href="#" onclick="jQuery('#frmAddRelease').toggle('slow'); return false;">Release hinzufügen</a></h3>
+	<h3><a href="#" onclick="jQuery('#frmAddRelease\\:<?php echo $project->project_id; ?>').toggle('slow'); return false;">Release hinzufügen</a></h3>
 	
-	<form id="frmAddRelease" method="post" action="" style="display:none">
+	<form id="frmAddRelease:<?php echo $project->project_id; ?>" method="post" action="" style="display:none">
 		<input type="hidden" name="action" value="add_release" />
 		<input type="hidden" name="project_id" value="<?php echo $project->project_id; ?>" />
 		
