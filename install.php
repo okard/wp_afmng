@@ -80,6 +80,9 @@ function afmng_install_db()
 function afmng_db_add_step($step_id, $prev_step, $name, $desc, $cap)
 {
 	global $wpdb;
+	
+	//check for null
+	
 	$wpdb->insert( afmngdb::$tbl_steps,  array( 
 			'step_id' => $step_id,
 			'prev_step_id' => $prev_step, 

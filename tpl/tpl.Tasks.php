@@ -27,24 +27,22 @@
 		<td><?php echo $task->name; ?></td>
 		<td>
 			<form>
-			<select id="state_no[<?php echo $task->task_id; ?>]" name="state_no">
+			<select id="state_no:<?php echo $task->task_id; ?>" name="state_no">
 				<?php foreach(afmngdb::$step_state as $key => $value): ?>
 					<option value="<?php echo $key; ?>" <?php echo $key == $task->state_no ? 'selected' : '' ?>><?php echo $value; ?></option>
 				<?php endforeach; ?>
 			</select>
 			</form>
 		</td>
-		<td><input id="description[<?php echo $task->task_id; ?>]" type="text" name="description" value="<?php echo $task->description; ?>" /></td>
+		<td><input id="description:<?php echo $task->task_id; ?>" type="text" name="description" value="<?php echo $task->description; ?>" /></td>
 		<td>
 			<a href="#" onclick="afmng_tasks_update(<?php echo $task->task_id;?>); return false;">Speichern</a>
-			<a href="#" onclick="afmng_tasks_release(<?php echo $task->task_id;?>); return false;">Freigeben</a>
+			<a href="#" onclick="afmng_tasks_free(<?php echo $task->task_id;?>); return false;">Freigeben</a>
 		</td>
 	</tr>
 	<?php endforeach; ?>
 </table>
 </div>
-
-<!-- Hidden Form -->
 
 <div id="task_available">
 			
@@ -69,10 +67,16 @@
 			<td><?php echo $task->episode_no, ' / ', $task->episode_title; ?></td>
 			<td><?php echo $task->name; ?></td>
 			<td>
-				<a href="#" onclick="return false;">Annehmen</a>
-				<?php if($this->is_admin):  ?>
-					<a href="#" onclick="return false;">Löschen</a>
-				<?php endif;  ?>
+				
+				<?php if($task->task_id): ?>
+				
+					<a href="#" onclick="afmng_tasks_accept(<?php echo $task->task_id; ?>); return false;">Annehmen</a>
+					<?php if($this->is_admin):  ?>
+						<a href="#" onclick="afmng_tasks_delete(<?php echo $task->task_id; ?>); return false;">Löschen</a>
+					<?php endif;  ?>
+				<?php else: ?>
+					<a href="#" onclick="return false;">Anlegen und annehmen</a>
+				<?php endif; ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>

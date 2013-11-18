@@ -49,8 +49,8 @@ function afmng_tasks_update(task_id)
 {
 	//extract state_no
 	//extract description
-	var state_no = jQuery("#state_no["+task_id+"]").val();
-	var description = jQuery("#description["+task_id+"]").val();
+	var state_no = jQuery("#state_no\\:"+task_id).val();
+	var description = jQuery("#description\\:"+task_id).val();
 	
 	//ajax request
 	var data = {
@@ -60,6 +60,8 @@ function afmng_tasks_update(task_id)
 		description: description
 	};
 	
+	//alert(JSON.stringify(data));
+	
 	// We can also pass the url value separately from ajaxurl for front end AJAX implementations
 	jQuery.post(ajaxurl, data, function(response) 
 	{
@@ -68,7 +70,10 @@ function afmng_tasks_update(task_id)
 			var data = JSON.parse(response);
 			
 			//check for errors
-			alert(data);
+			if(data.error)
+			{
+				alert(data.msg);
+			}
 			
 			//dummy submit
 			jQuery("#dummyForm").submit();
@@ -78,6 +83,14 @@ function afmng_tasks_update(task_id)
 			alert(e + '\n' + response);
 		}
 	});
+}
+
+/**
+* Remove own user from a task
+*/
+function afmng_tasks_free(task_id)
+{
+	alert("Not yet implemented");
 }
 
 
@@ -100,7 +113,10 @@ function afmng_tasks_accept(task_id)
 			var data = JSON.parse(response);
 			
 			//check for errors
-			alert(data);
+			if(data.error)
+			{
+				alert(data.msg);
+			}
 			
 			//dummy submit
 			jQuery("#dummyForm").submit();
@@ -112,4 +128,10 @@ function afmng_tasks_accept(task_id)
 	});
 }
 
-//tasks delete
+/**
+* Delete a task
+*/ 
+function afmng_tasks_delete(task_id)
+{
+	alert("Not yet implemented");
+}

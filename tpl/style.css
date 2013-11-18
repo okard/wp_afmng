@@ -70,3 +70,22 @@ div.button_delete{
     text-align: center;
     margin: 10px 0 14px;
 }
+
+
+/* status styles */
+.status_0 { /*Offen*/
+	background-color:red;
+}
+
+.status_1 { /*In Bearbeitung*/
+	background-color:yellow;
+}
+
+.status_2 { /*Erledigt*/
+	background-color:green;
+}
+
+/* step styles */
+.step_1 { /* raw should be 0 */
+	background-color:gray;
+} 

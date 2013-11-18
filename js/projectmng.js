@@ -30,7 +30,10 @@ function afmng_project_delete(project_id)
 					var data = JSON.parse(response);
 					
 					//check for errors
-					//alert(data);
+					if(data.error)
+					{
+						alert(data.msg);
+					}
 					
 					//dummy submit
 					jQuery("#dummyForm").submit();
@@ -72,7 +75,10 @@ function afmng_release_delete(release_id)
 					var data = JSON.parse(response);
 					
 					//check for errors
-					//alert(data);
+					if(data.error)
+					{
+						alert(data.msg);
+					}
 					
 					//dummy submit
 					jQuery("#dummyForm").submit();

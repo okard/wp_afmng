@@ -43,9 +43,21 @@ function wp_ajax_task_accept()
 	//accept task for current user
 	$task_id = $_POST['task_id'];
 	
-	ob_clean();
-	echo json_encode(false);
-	die();
+	try 
+	{
+		$user = wp_get_current_user()->user_login;
+		afmng_db_task_accept($task_id, $user);
+		ob_clean();
+		echo json_encode(true);
+		die();
+	} 
+	catch (Exception $e) 
+	{
+		$res = array("error"=>true, msg=>$e->getMessage() );
+		ob_clean();
+		echo json_encode($res);
+		die();
+	}
 }
 
 

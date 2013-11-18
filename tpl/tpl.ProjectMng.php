@@ -30,13 +30,13 @@
 					<thead>
 						<tr>
 						<?php foreach($steps as $step): ?>
-							<th><?php echo $step->step_name; ?></th>
+							<th class="step_<?php echo $step->step_id; ?>"><?php echo $step->step_name; ?></th>
 						<?php endforeach; ?>
 						</tr>
 					</thead>
 					<tr>
 					<?php foreach($steps as $step): ?>
-						<td><span class="status_<?php echo afmng_db_steps_state($step->state_no); ?>"><?php echo empty($step->user) ? '(Offen)' : $step->user; ?></span><a href='javascript:;' title="<?php echo $step->description; ?>">&nbsp;</a></td>
+						<td><span class="status_<?php echo $step->state_no; ?>"><?php echo empty($step->user) ? '(Offen)' : $step->user; ?></span><a href='javascript:;' title="<?php echo $step->description; ?>">&nbsp;</a></td>
 					<?php endforeach; ?>
 					</tr>
 				</table>

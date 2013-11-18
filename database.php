@@ -115,7 +115,13 @@ function afmng_project_delete($project_id)
 {
 	global $wpdb;
 	
-	$wpdb->delete(afmngdb::$tbl_anime, array( 'project_id' => $project_id ), array( '%d' ) );
+	$res = $wpdb->delete(afmngdb::$tbl_anime, array( 'project_id' => $project_id ), array( '%d' ) );
+	
+	if(!$res)
+	{
+		throw new Exception($wpdb->last_error);
+	}
+	
 }
 
 
@@ -179,7 +185,12 @@ function afmng_db_release_delete($release_id)
 {
 	global $wpdb;
 	
-	$wpdb->delete(afmngdb::$tbl_episode, array( 'release_id' => $release_id ), array( '%d' ) );
+	$res = $wpdb->delete(afmngdb::$tbl_episode, array( 'release_id' => $release_id ), array( '%d' ) );
+
+	if(!$res)
+	{
+		throw new Exception($wpdb->last_error);
+	}
 
 	return true;
 }
@@ -248,7 +259,12 @@ function afmng_db_task_delete($task_id)
 {
 	global $wpdb;
 	
-	$wpdb->delete(afmngdb::$tbl_tasks, array( 'task_id' => $task_id ), array( '%d' ) );
+	$res = $wpdb->delete(afmngdb::$tbl_tasks, array( 'task_id' => $task_id ), array( '%d' ) );
+	
+	if(!$res)
+	{
+		throw new Exception($wpdb->last_error);
+	}
 
 	return true;
 }
@@ -259,7 +275,7 @@ function afmng_db_task_update($task_id, $state_no, $description)
 {
 	global $wpdb;
 	
-	$wpdb->update( 
+	$res = $wpdb->update( 
 		afmngdb::$tbl_tasks, 
 		array( 
 			'state_no' => $state_no,
@@ -273,7 +289,37 @@ function afmng_db_task_update($task_id, $state_no, $description)
 		array( '%d' ) 
 	);
 	
-	return true;
+	if(!$res)
+	{
+		throw new Exception($wpdb->last_error);
+	}
+}
+
+//assign task to user
+function afmng_db_task_accept($task_id, $user)
+{
+	global $wpdb;
+	
+	$res = $wpdb->update( 
+		afmngdb::$tbl_tasks, 
+		array( 
+			'user' => $user
+		), 
+		array( 'task_id' => $task_id ), 
+		array('%s'), 
+		array('%d') 
+	);
+	
+	if($res === 0)
+	{
+		throw new Exception("No tasks updated");
+	}
+	
+	if(!$res)
+	{
+		throw new Exception($wpdb->last_error);
+	}
+	
 }
 
 //======================================================================
@@ -305,6 +351,7 @@ function afmng_db_gettasks($user)
 			ON p.project_id = r.project_id
 		WHERE
 			sm.user = '$user'
+		AND NOT (p.completed = true OR p.licensed = true)
 		"
 	);
 }
@@ -321,6 +368,7 @@ function afmng_db_tasks_available($user_id)
 	$sql =
 		"
 		SELECT
+			sm.task_id,
 			p.anime_name,
 			r.episode_no,
 			r.episode_title,
@@ -334,6 +382,7 @@ function afmng_db_tasks_available($user_id)
 			ON p.project_id = r.project_id
 		WHERE (sm.user IS NULL OR sm.user = '')
 		AND s.capability IN ('".implode("','",$caps)."')
+		AND NOT (p.completed = true OR p.licensed = true)
 		"
 		;
 	
@@ -344,24 +393,44 @@ function afmng_db_tasks_available($user_id)
 	$sql =
 		"
 		SELECT
-			p.anime_name,
-			r.episode_no,
-			r.episode_title,
-			s.name
-		FROM ".afmngdb::$tbl_steps." as s
-		INNER JOIN ".afmngdb::$tbl_tasks." as sm
-			ON s.prev_step_id = MAX(sm.step_id) 
+		 NULL as task_id, 
+		 p.anime_name,
+		 r.episode_no,
+		 r.episode_title, 
+		 s.name,
+		 s.step_id
+		FROM
+		(SELECT 
+			sm.release_id,
+			MAX(s.step_id) as step_id
+		FROM ".afmngdb::$tbl_tasks." as sm
+		INNER JOIN ".afmngdb::$tbl_steps." as s
+			ON s.prev_step_id = sm.step_id
 		INNER JOIN ".afmngdb::$tbl_episode." as r 
 			ON sm.release_id = r.release_id
 		INNER JOIN ".afmngdb::$tbl_anime." as p
-			ON p.project_id = r.project_id
+			ON p.project_id = r.project_id 
+			AND p.licensed = false AND p.completed = false
+		GROUP BY 
+			sm.release_id
+		) as sm
+		INNER JOIN ".afmngdb::$tbl_steps." as s
+			ON s.step_id = sm.step_id
+		INNER JOIN ".afmngdb::$tbl_episode." as r 
+			ON sm.release_id = r.release_id
+		INNER JOIN ".afmngdb::$tbl_anime." as p
+			ON p.project_id = r.project_id 
 		WHERE s.capability IN ('".implode("','",$caps)."')
 		"
 		;
 	
-	//array_push($results, $wpdb->get_results($sql));
+	//tasks with prev_step_id == null
 	
-	return $results;
+	//var_dump($sql);
+	
+	$task_createable = $wpdb->get_results($sql);
+	
+	return array_merge($results, $task_createable);
 }
 
 /**
