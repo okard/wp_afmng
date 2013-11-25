@@ -135,7 +135,10 @@ function afmng_menu_projectmng()
 		case 'episode':
 			$ltpl = new LTemplate();
 			if($_POST["release_id"])
+			{
 				$ltpl->episode = afmng_db_release_get($_POST["release_id"])[0];
+				$ltpl->tasks = afmng_db_release_steps($_POST["release_id"]);
+			}
 			$ltpl->is_admin = afmng_user_cap('afmng_admin', null);
 			$ltpl->view = 'episode';
 			$ltpl->render(afmng_get_tplfile('tpl.ProjectMng.Episode.php'));
