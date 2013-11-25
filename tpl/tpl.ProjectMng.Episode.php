@@ -1,7 +1,7 @@
 <div id="afmng_body">
 
 <form id="dummyForm" method="post" action="">
-	<input name="view" type="hidden" value="view" />
+	<input name="view" type="hidden" value="episode" />
 	<input name="release_id" type="hidden" value="<?php echo $this->episode->release_id; ?>"/>
 </form>
 
@@ -31,7 +31,7 @@
 
 <h2>Tasks</h2>
 <?php if($this->is_admin): ?>
-	<a href="#" title="Alle Tasks löschen" onclick="return false;" >Alle Tasks löschen</a>
+	<a href="#" title="Alle Tasks löschen" onclick="afmng_episode_delete_tasks(<?php echo $this->episode->release_id; ?>); return false;" >Alle Tasks löschen</a>
 <?php endif; ?>
 
 <table class="afmng_table">
@@ -54,8 +54,11 @@
 		<td>
 			<?php if($this->is_admin): ?>
 				<a href="#" title="Speichern" onclick="return false;">Speichern</a>
-				<a href="#" title="Löschen" onclick="return false;">Löschen</a>
-				<a href="#" title="Freigeben" onclick="return false;">Freigeben</a>
+				<a href="#" title="Löschen" onclick="afmng_tasks_delete(<?php echo $task->task_id; ?>); return false;">Löschen</a>
+				
+				<?php if($task->user): ?>
+					<a href="#" title="Freigeben" onclick="afmng_tasks_free(<?php echo $task->task_id; ?>); return false;">Freigeben</a>
+				<?php endif; ?>
 			<?php endif; ?>
 		</td>
 	</tr>

@@ -124,7 +124,7 @@ function afmng_episode_show(release_id)
 function afmng_project_clear_status(project_id)
 {
 	jQuery.jconfirm(
-	    {
+		{
 			title: 'Projekt zurücksetzen',
 			message: 'Status des Projekts ('+project_id+') wirklich zurücksetzen?',
 			confirm: 'Ja',
@@ -141,3 +141,57 @@ function afmng_project_clear_status(project_id)
 		}
 	);
 }
+
+
+/**
+* Delete a task
+*/ 
+function afmng_tasks_delete(task_id)
+{
+	//ajax request
+	var data = {
+		action: 'task_delete',
+		task_id: task_id
+	};
+	afmng_do_ajax_post(data);
+}
+
+/**
+* Remove own user from a task
+*/
+function afmng_tasks_free(task_id)
+{
+	//ajax request
+	var data = {
+		action: 'task_free',
+		task_id: task_id
+	};
+	afmng_do_ajax_post(data);
+}
+
+
+/**
+* Remove own user from a task
+*/
+function afmng_episode_delete_tasks(release_id)
+{
+	jQuery.jconfirm(
+	    {
+			title: 'Aufgaben löschen',
+			message: 'Alle Aufgaben der Episode('+release_id+') wirklich löschen?',
+			confirm: 'Ja',
+			cancel: 'Nein'
+		}, 
+		function() 
+		{
+			//ajax request
+			var data = {
+				action: 'episode_delete_tasks',
+				release_id: release_id
+			};
+			afmng_do_ajax_post(data);
+		}
+	);
+}
+
+

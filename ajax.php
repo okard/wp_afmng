@@ -113,7 +113,7 @@ function wp_ajax_task_free()
 
 
 /**
-* Release a task from an user
+* Clear project status
 */
 add_action('wp_ajax_project_clear_status', 'wp_ajax_project_clear_status');
 function wp_ajax_project_clear_status()
@@ -136,6 +136,32 @@ function wp_ajax_project_clear_status()
 		die();
 	}
 }
+
+/**
+* Delete release tasks
+*/
+add_action('wp_ajax_episode_delete_tasks', 'wp_ajax_episode_delete_tasks');
+function wp_ajax_episode_delete_tasks()
+{
+	//accept task for current user
+	$release_id = $_POST['release_id'];
+	
+	try 
+	{
+		afmng_db_release_delete_tasks($release_id);
+		ob_clean();
+		echo json_encode(true);
+		die();
+	} 
+	catch (Exception $e) 
+	{
+		$res = array("error"=>true, msg=>$e->getMessage() );
+		ob_clean();
+		echo json_encode($res);
+		die();
+	}
+}
+
 
 
 

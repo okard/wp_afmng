@@ -78,6 +78,21 @@ div.button_delete{
     margin: 10px 0 14px;
 }
 
+.jconfirm_buttons a {
+	padding: 0.5em;
+	margin-left: 1em;
+	margin-right: 1em;
+	
+	border:1px solid;
+	background-color: #21759B;
+    background-image: linear-gradient(to bottom, #2A95C5, #21759B);
+    border-color: #21759B #21759B #1E6A8D;
+    box-shadow: 0 1px 0 rgba(120, 200, 230, 0.5) inset;
+    color: #FFFFFF;
+    text-decoration: none;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
 
 /* status styles */
 .status_0 { /*Offen*/
