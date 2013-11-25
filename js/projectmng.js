@@ -1,5 +1,20 @@
 /* projectmng.js */
 
+function afmng_do_form_post(data)
+{
+	//add key/value from data
+	var form = jQuery("#dummyForm");
+	
+	jQuery.each(data, function(key, value) 
+	{
+		jQuery("<input type='hidden' />")
+		.attr("name", key)
+		.attr("value", value)
+		.appendTo(form);
+	});
+	
+	form.submit();
+}
 
 //delete project
 
@@ -97,3 +112,17 @@ function afmng_release_delete(release_id, delete_tasks)
 //delete task?
 
 //delete all tasks
+
+/**
+* Show episode
+*/
+function afmng_episode_show(release_id)
+{
+	//ajax request
+	var data = {
+		view: 'episode',
+		release_id: release_id
+	};
+			
+	afmng_do_form_post(data);	
+}

@@ -111,15 +111,36 @@ function afmng_menu_projectmng()
 	//-project (single project + episodes)
 	//-episode (single episode + tasks)
 	
+	//extract view
+	$view = 'overview';
+	
 	if(afmng_check_post())
+	{
+		//handle actions:
 		afmng_menu_projectmng_postback();
-	
-	$ltpl = new LTemplate();
-	$ltpl->project_list = afmng_db_project_list();
-	$ltpl->is_admin = afmng_user_cap('afmng_admin', null);
-	
-	//render page
-	$ltpl->render(afmng_get_tplfile('tpl.ProjectMng.php'));
+		//extract view
+		$view = $_POST["view"];
+	}
+		
+	//show right view and prepare data
+	switch($view)
+	{
+		case 'overview':
+			$ltpl = new LTemplate();
+			$ltpl->project_list = afmng_db_project_list();
+			$ltpl->is_admin = afmng_user_cap('afmng_admin', null);
+			$ltpl->view = 'overview';
+			$ltpl->render(afmng_get_tplfile('tpl.ProjectMng.php'));
+			break;
+		case 'episode':
+			$ltpl = new LTemplate();
+			if($_POST["release_id"])
+				$ltpl->episode = afmng_db_release_get($_POST["release_id"])[0];
+			$ltpl->is_admin = afmng_user_cap('afmng_admin', null);
+			$ltpl->view = 'episode';
+			$ltpl->render(afmng_get_tplfile('tpl.ProjectMng.Episode.php'));
+			break;
+	}
 }
 
 /**
@@ -140,6 +161,8 @@ function afmng_menu_projectmng_postback()
 		case 'add_release':
 			afmng_db_release_add($_POST["project_id"], $_POST["episode_no"], $_POST["episode_title"]);
 			break;
+			
+		//episode_update
 	}
 }
 

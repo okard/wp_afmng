@@ -2,7 +2,8 @@
 
 <h1>Project Manager</h1>
 
-<form id="dummyForm" method="post" action=""></form>
+<form id="dummyForm" method="post" action="">
+</form>
 
 <?php foreach($this->project_list as $project): ?>
 	<div class="project_box">
@@ -47,7 +48,11 @@
 	<?php foreach(afmng_db_project_releases( $project->project_id) as $release): ?>
 		<?php $steps = afmng_db_release_steps($release->release_id) ?>
 		<tr>
-			<td><?php echo $release->episode_no; ?></td>
+			<td>
+				<a href="#" title="Episode anzeigen" onclick="afmng_episode_show(<?php echo $release->release_id; ?>); return false;">
+				<?php echo $release->episode_no; ?>
+				</a>
+			</td>
 			<td>
 				<?php echo $release->episode_title; ?>
 				<?php if($this->is_admin): ?>

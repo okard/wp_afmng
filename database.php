@@ -142,6 +142,30 @@ function afmng_project_delete($project_id)
 //======================================================================
 //release/episode functions:
 
+function afmng_db_release_get($release_id)
+{
+	global $wpdb;
+	
+	$results = $wpdb->get_results(
+		$wpdb->prepare(
+			"
+			SELECT 
+				r.release_id,
+				r.episode_no,
+				r.episode_title,
+				p.anime_name
+			FROM ".afmngdb::$tbl_episode." as r
+			INNER JOIN ".afmngdb::$tbl_anime." as p
+				ON p.project_id = r.project_id
+			WHERE release_id = %d
+			",
+			$release_id
+		)
+	);
+	
+	return $results;
+}
+
 /**
 * get steps of a release
 */
