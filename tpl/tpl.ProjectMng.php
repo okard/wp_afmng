@@ -145,7 +145,7 @@
 				<td><?php echo $project->licensed; ?></td>
 				<td><?php echo $project->completed; ?></td>
 				<td>
-					<a href="#" title="Status zurücksetzen" onclick="return false;">Status zurücksetzen</a>
+					<a href="#" title="Status zurücksetzen" onclick="afmng_project_clear_status(<?php echo $project->project_id; ?>); return false;">Status zurücksetzen</a>
 				</td>
 			</tr>
 		<?php endforeach; ?>

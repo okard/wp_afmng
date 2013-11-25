@@ -201,16 +201,16 @@ function afmng_menu_usermng_postback()
 		case 'update_user':
 			foreach(afmng_db_get_users() as $user)
 			{
+				$user = new WP_User($user->ID);
+				
 				foreach(afmngdb::$caps as $cap)
 				{
-					if($_POST[$cap.':'.$user->ID])
+					if(!$user->has_cap($cap) && $_POST[$cap.':'.$user->ID])
 					{
-						$user = new WP_User($user->ID);
 						$user->add_cap($cap);
 					}
-					else
+					else if ($user->has_cap($cap) && !isset($_POST[$cap.':'.$user->ID]))
 					{
-						$user = new WP_User($user->ID);
 						$user->remove_cap($cap);
 					}
 				}

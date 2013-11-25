@@ -1,5 +1,8 @@
 /* projectmng.js */
 
+/**
+* Do form post
+*/
 function afmng_do_form_post(data)
 {
 	//add key/value from data
@@ -16,8 +19,37 @@ function afmng_do_form_post(data)
 	form.submit();
 }
 
-//delete project
+/**
+* Do ajax post
+*/
+function afmng_do_ajax_post(data)
+{
+	// We can also pass the url value separately from ajaxurl for front end AJAX implementations
+	jQuery.post(ajaxurl, data, function(response) 
+	{
+		try
+		{
+			var data = JSON.parse(response);
+			
+			//check for errors
+			if(data.error)
+			{
+				alert(data.msg);
+			}
+			
+			//dummy submit
+			jQuery("#dummyForm").submit();
+		}
+		catch(e)
+		{
+			alert(e + '\n' + response);
+		}
+	});
+}
 
+/**
+* Delete project
+*/
 function afmng_project_delete(project_id)
 {
 	 jQuery.jconfirm(
@@ -36,33 +68,14 @@ function afmng_project_delete(project_id)
 				action: 'project_delete',
 				project_id: project_id
 			};
-	
-			// We can also pass the url value separately from ajaxurl for front end AJAX implementations
-			jQuery.post(ajaxurl, data, function(response) 
-			{
-				try
-				{
-					var data = JSON.parse(response);
-					
-					//check for errors
-					if(data.error)
-					{
-						alert(data.msg);
-					}
-					
-					//dummy submit
-					jQuery("#dummyForm").submit();
-				}
-				catch(e)
-				{
-					alert(e + '\n' + response);
-				}
-			});
+			afmng_do_ajax_post(data);
 		}
 	);
 }
 
-//delete episode/release
+/**
+* Delete a release/episode
+*/
 function afmng_release_delete(release_id, delete_tasks)
 {
 	jQuery.jconfirm(
@@ -82,32 +95,10 @@ function afmng_release_delete(release_id, delete_tasks)
 				release_id: release_id,
 				delete_tasks: delete_tasks
 			};
-	
-			// We can also pass the url value separately from ajaxurl for front end AJAX implementations
-			jQuery.post(ajaxurl, data, function(response) 
-			{
-				try
-				{
-					var data = JSON.parse(response);
-					
-					//check for errors
-					if(data.error)
-					{
-						alert(data.msg);
-					}
-					
-					//dummy submit
-					jQuery("#dummyForm").submit();
-				}
-				catch(e)
-				{
-					alert(e + '\n' + response);
-				}
-			});
+			afmng_do_ajax_post(data);
 		}
 	);
 }
-
 
 //delete task?
 
@@ -125,4 +116,28 @@ function afmng_episode_show(release_id)
 	};
 			
 	afmng_do_form_post(data);	
+}
+
+/**
+* Clear project status
+*/
+function afmng_project_clear_status(project_id)
+{
+	jQuery.jconfirm(
+	    {
+			title: 'Projekt zurücksetzen',
+			message: 'Status des Projekts ('+project_id+') wirklich zurücksetzen?',
+			confirm: 'Ja',
+			cancel: 'Nein'
+		}, 
+		function() 
+		{
+			//ajax request
+			var data = {
+				action: 'project_clear_status',
+				project_id: project_id
+			};
+			afmng_do_ajax_post(data);
+		}
+	);
 }

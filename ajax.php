@@ -19,11 +19,10 @@ function afmng_ajax_get_releases()
 }
 
 
-add_action('wp_ajax_get_steps', 'afmng_ajax_get_steps');
-
 /**
 * deliver a step list
 */ 
+add_action('wp_ajax_get_steps', 'afmng_ajax_get_steps');
 function afmng_ajax_get_steps()
 {
 	ob_clean();
@@ -60,7 +59,6 @@ function wp_ajax_task_accept()
 	}
 }
 
-
 /**
 * Assign a task to user
 */
@@ -88,7 +86,6 @@ function wp_ajax_task_create_assign()
 	}
 }
 
-
 /**
 * Release a task from an user
 */
@@ -113,6 +110,34 @@ function wp_ajax_task_free()
 		die();
 	}
 }
+
+
+/**
+* Release a task from an user
+*/
+add_action('wp_ajax_project_clear_status', 'wp_ajax_project_clear_status');
+function wp_ajax_project_clear_status()
+{
+	//accept task for current user
+	$project_id = $_POST['project_id'];
+	
+	try 
+	{
+		afmng_project_update($project_id, null, false, false);
+		ob_clean();
+		echo json_encode(true);
+		die();
+	} 
+	catch (Exception $e) 
+	{
+		$res = array("error"=>true, msg=>$e->getMessage() );
+		ob_clean();
+		echo json_encode($res);
+		die();
+	}
+}
+
+
 
 //======================================================================
 //update functions:

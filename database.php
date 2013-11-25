@@ -130,15 +130,30 @@ function afmng_project_update($project_id, $name, $completed, $licensed)
 {
 	global $wpdb;
 	
+	$columns = array();
+	$format = array();
+	
+	if(isset($name))
+	{
+		$columns['anime_name'] = $name;
+		array_push($format, '%s');
+	}
+	if(isset($completed))
+	{
+		$columns['completed'] = $completed;
+		array_push($format, '%d');
+	}
+	if(isset($licensed))
+	{
+		$columns['licensed'] = $licensed;
+		array_push($format, '%d');
+	}
+	
 	$wpdb->update( 
 	afmngdb::$tbl_anime, 
-	array( 
-		'anime_name' => $name,
-		'completed' => $completed,
-		'licensed' => $licensed
-	), 
+	$columns, 
 	array( 'project_id' => $project_id ), 
-	array( '%s','%d', '%d'), 
+	$format, 
 	array( '%d' ) 
     );
 }
