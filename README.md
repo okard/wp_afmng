@@ -7,10 +7,10 @@ Wordpress Plugin for Managing Fansub Releases of Animes
 
 ### Project Manager
 
-- [ ] Edit episodes ( no, title, tasks) 
+- [W] Edit episodes ( no, title, tasks) 
 - [ ] Reset tasks (remove user)
-- [ ] Remove all tasks? (from episode for deletion)
-- [ ] Unlock/Show licensed/completed project
+- [W] Remove all tasks? (from episode for deletion)
+- [W] Unlock/Show licensed/completed project
 - [ ] Improve view of task descriptions
 - [X] Add property to steps to show description when required
 - [X] Make usable for all plugin user (use right caps)

@@ -240,6 +240,28 @@ function afmng_db_release_add($project_id, $episode_no, $episode_title)
 }
 
 /**
+* Update anime release (episode)
+*/
+function afmng_db_release_update($release_id, $episode_no, $episode_title)
+{
+	global $wpdb;
+
+	$wpdb->update( 
+		afmngdb::$tbl_episode, 
+		array( 
+			'episode_no' => $episode_no,
+			'episode_title' => $episode_title
+		), 
+		array ('release_id' => $release_id),
+		array( 
+			'%s',
+			'%s'
+		),
+		array('%d')
+	);
+}
+
+/**
 * Delete a release/episode
 */
 function afmng_db_release_delete($release_id)

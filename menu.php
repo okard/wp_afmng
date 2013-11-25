@@ -167,7 +167,9 @@ function afmng_menu_projectmng_postback()
 			afmng_db_release_add($_POST["project_id"], $_POST["episode_no"], $_POST["episode_title"]);
 			break;
 			
-		//episode_update
+		case 'episode_update':
+			 afmng_db_release_update($_POST["release_id"], $_POST["episode_no"], $_POST["episode_title"]);
+			break;
 	}
 }
 

@@ -10,7 +10,7 @@
 
 <?php if($this->is_admin): ?>
 	<form id="updateEpisode" method="post" action="">
-		<input name="view" type="hidden" value="view" />
+		<input name="view" type="hidden" value="episode" />
 		<input name="action" type="hidden" value="episode_update" />
 		<input name="release_id" type="hidden" value="<?php echo $this->episode->release_id; ?>"/>
 		<input name="episode_no" type="text" value="<?php echo $this->episode->episode_no; ?>" />
