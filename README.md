@@ -20,7 +20,7 @@ Wordpress Plugin for Managing Fansub Releases of Animes
 
 - [ ] Assign and create task for user
 - [X] Delete task (without user as admin)
-- [ ] Release task (remove user assigment)
+- [X] Release task (remove user assigment)
 - [ ] Extend available tasks (multiple, without prev steps)
 
 ### User Manager & Capabilities

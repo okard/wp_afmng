@@ -1,6 +1,39 @@
 /* tasks.js */
 
+/**
+* Ajax Request Function
+*/
+function do_ajax_request(data, cb)
+{
+	// We can also pass the url value separately from ajaxurl for front end AJAX implementations
+	jQuery.post(ajaxurl, data, function(response) 
+	{
+		try
+		{
+			var data = JSON.parse(response);
+			
+			//check for errors
+			if(data.error)
+			{
+				alert(data.msg);
+			}
+			
+			if(cb)
+				cb(data);
+			
+			//dummy submit
+			jQuery("#dummyForm").submit();
+		}
+		catch(e)
+		{
+			alert(e + '\n' + response);
+		}
+	});
+}
 
+/**
+* Event when choose an anime in the admin task creation dialog
+*/
 function afmng_tasks_animeselect()
 {
 	var v_project_id = jQuery("#cmb_anime").val();
@@ -32,7 +65,9 @@ function afmng_tasks_animeselect()
 	});
 }
 
-
+/**
+* Setup Events for admin task creation dialog
+*/
 jQuery(document).ready(function($) 
 {
 	//register anime select 
@@ -62,27 +97,7 @@ function afmng_tasks_update(task_id)
 	
 	//alert(JSON.stringify(data));
 	
-	// We can also pass the url value separately from ajaxurl for front end AJAX implementations
-	jQuery.post(ajaxurl, data, function(response) 
-	{
-		try
-		{
-			var data = JSON.parse(response);
-			
-			//check for errors
-			if(data.error)
-			{
-				alert(data.msg);
-			}
-			
-			//dummy submit
-			jQuery("#dummyForm").submit();
-		}
-		catch(e)
-		{
-			alert(e + '\n' + response);
-		}
-	});
+	do_ajax_request(data);
 }
 
 /**
@@ -90,7 +105,12 @@ function afmng_tasks_update(task_id)
 */
 function afmng_tasks_free(task_id)
 {
-	alert("Not yet implemented");
+	//ajax request
+	var data = {
+		action: 'task_free',
+		task_id: task_id
+	};
+	do_ajax_request(data);
 }
 
 
@@ -105,27 +125,7 @@ function afmng_tasks_accept(task_id)
 		task_id: task_id
 	};
 	
-	// We can also pass the url value separately from ajaxurl for front end AJAX implementations
-	jQuery.post(ajaxurl, data, function(response) 
-	{
-		try
-		{
-			var data = JSON.parse(response);
-			
-			//check for errors
-			if(data.error)
-			{
-				alert(data.msg);
-			}
-			
-			//dummy submit
-			jQuery("#dummyForm").submit();
-		}
-		catch(e)
-		{
-			alert(e + '\n' + response);
-		}
-	});
+	do_ajax_request(data);
 }
 
 
@@ -148,26 +148,5 @@ function afmng_tasks_delete(task_id)
 		action: 'task_delete',
 		task_id: task_id
 	};
-	
-	// We can also pass the url value separately from ajaxurl for front end AJAX implementations
-	jQuery.post(ajaxurl, data, function(response) 
-	{
-		try
-		{
-			var data = JSON.parse(response);
-			
-			//check for errors
-			if(data.error)
-			{
-				alert(data.msg);
-			}
-			
-			//dummy submit
-			jQuery("#dummyForm").submit();
-		}
-		catch(e)
-		{
-			alert(e + '\n' + response);
-		}
-	});
+	do_ajax_request(data);
 }

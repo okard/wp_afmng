@@ -330,8 +330,35 @@ function afmng_db_task_accept($task_id, $user)
 	{
 		throw new Exception($wpdb->last_error);
 	}
-	
 }
+
+//release task from user
+function afmng_db_task_free($task_id)
+{
+	global $wpdb;
+	
+	$res = $wpdb->query( 
+		   $wpdb->prepare( 
+				"
+				UPDATE ".afmngdb::$tbl_tasks."
+				SET user = NULL
+				WHERE task_id = %d
+				",
+				$task_id 
+				)
+			);
+	
+	if($res === 0)
+	{
+		throw new Exception("No tasks updated");
+	}
+	
+	if(!$res)
+	{
+		throw new Exception($wpdb->last_error);
+	}
+}
+
 
 //======================================================================
 //special functions:
