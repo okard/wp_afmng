@@ -430,9 +430,11 @@ function afmng_db_tasks_available($user_id)
 		SELECT
 			sm.task_id,
 			p.anime_name,
+			r.release_id,
 			r.episode_no,
 			r.episode_title,
-			s.name
+			s.name,
+			s.step_id
 		FROM ".afmngdb::$tbl_tasks." as sm
 		INNER JOIN ".afmngdb::$tbl_steps." as s
 			ON s.step_id = sm.step_id
@@ -455,6 +457,7 @@ function afmng_db_tasks_available($user_id)
 		SELECT
 		 NULL as task_id, 
 		 p.anime_name,
+		 r.release_id,
 		 r.episode_no,
 		 r.episode_title, 
 		 s.name,

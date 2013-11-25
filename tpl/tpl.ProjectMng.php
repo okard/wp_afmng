@@ -104,10 +104,7 @@
 	</div>
 <?php endforeach; ?>
 
-<?php print_r($this->is_admin); ?>
-<?php print_r(afmng_user_cap('afmng_admin', null)); ?>
-
-<?php if($this->is_admin === true): ?>
+<?php if($this->is_admin): ?>
 <div id="project_add">
 <h2>Projekt hinzufügen</h2>	
 <form id="frmAddProject" method="post" action="">

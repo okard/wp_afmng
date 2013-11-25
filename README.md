@@ -18,7 +18,7 @@ Wordpress Plugin for Managing Fansub Releases of Animes
 
 ### Task Manager
 
-- [ ] Assign and create task for user
+- [X] Assign and create task for user
 - [X] Delete task (without user as admin)
 - [X] Release task (remove user assigment)
 - [ ] Extend available tasks (multiple, without prev steps)
@@ -26,9 +26,9 @@ Wordpress Plugin for Managing Fansub Releases of Animes
 ### User Manager & Capabilities
 
 - [ ] Assign caps to User
-- [ ] General plugin cap for task menu
-- [ ] Seperate Plugin admin?
-- [ ] Improve utility function for caps (is_plugin_admin)
+- [X] General plugin cap for task menu
+- [X] Seperate Plugin admin?
+- [X] Improve utility function for caps (is_plugin_admin)
 
 ### Status Widget
 
@@ -38,8 +38,8 @@ Wordpress Plugin for Managing Fansub Releases of Animes
 ### Other
 
 - [ ] Show step tree and editing
-- [ ] Add description for steps
+- [I] Add description for steps (already done)
 - [ ] Add description for task state_no (shortcut+desc)
 - [ ] Cleanup code
 - [ ] Finish security checks
-- [ ] Additional step after QC done
+- [X] Additional step after QC done

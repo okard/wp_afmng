@@ -132,9 +132,14 @@ function afmng_tasks_accept(task_id)
 /**
 * Create a task and assign it to user
 */
-function afmng_tasks_create_assign()
+function afmng_tasks_create_assign(release_id, step_id)
 {
-	alert("Not yet implemented");
+	var data = {
+		action: 'task_create_assign',
+		release_id: release_id,
+		step_id: step_id
+	};
+	do_ajax_request(data);
 }
 
 

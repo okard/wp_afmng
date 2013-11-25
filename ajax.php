@@ -60,6 +60,35 @@ function wp_ajax_task_accept()
 	}
 }
 
+
+/**
+* Assign a task to user
+*/
+add_action('wp_ajax_task_create_assign', 'wp_ajax_task_create_assign');
+function wp_ajax_task_create_assign()
+{
+	//accept task for current user
+	$release_id = $_POST['release_id'];
+	$step_id = $_POST['step_id'];
+	
+	try 
+	{
+		$user = wp_get_current_user()->user_login;
+		afmng_db_task_add($release_id, $step_id, $user);
+		ob_clean();
+		echo json_encode(true);
+		die();
+	} 
+	catch (Exception $e) 
+	{
+		$res = array("error"=>true, msg=>$e->getMessage() );
+		ob_clean();
+		echo json_encode($res);
+		die();
+	}
+}
+
+
 /**
 * Release a task from an user
 */
