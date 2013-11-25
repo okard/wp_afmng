@@ -178,6 +178,12 @@ function afmng_menu_projectmng_postback()
 */
 function afmng_menu_usermng()
 {
+	if(afmng_check_post())
+	{
+		afmng_menu_usermng_postback();
+	}
+		
+		
 	$ltpl = new LTemplate();
 	$ltpl->users = afmng_db_get_users();
 	$ltpl->caps = afmngdb::$caps;
@@ -185,6 +191,33 @@ function afmng_menu_usermng()
 	$ltpl->render(afmng_get_tplfile('tpl.UserMng.php'));
 }
 
+/**
+* Handle postback from user manager
+*/
+function afmng_menu_usermng_postback()
+{
+	switch($_POST["action"])
+	{
+		case 'update_user':
+			foreach(afmng_db_get_users() as $user)
+			{
+				foreach(afmngdb::$caps as $cap)
+				{
+					if($_POST[$cap.':'.$user->ID])
+					{
+						$user = new WP_User($user->ID);
+						$user->add_cap($cap);
+					}
+					else
+					{
+						$user = new WP_User($user->ID);
+						$user->remove_cap($cap);
+					}
+				}
+			}
+			break;
+	}
+}
 
 
 ?>
