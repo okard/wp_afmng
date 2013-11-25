@@ -128,4 +128,29 @@
 </div>
 <?php endif; ?>
 
+<?php if($this->is_admin): ?>
+	<h1>Abgeschlossene Animes</h1>
+	<table class="afmng_table">
+		<thead>
+			<tr>
+				<th>Anime</th>
+				<th>Lizensiert</th>
+				<th>Komplett</th>
+				<th></th>
+			</tr>
+		</thead>
+		<?php foreach($this->projects_closed as $project): ?>
+			<tr>
+				<td><?php echo $project->anime_name; ?></td>
+				<td><?php echo $project->licensed; ?></td>
+				<td><?php echo $project->completed; ?></td>
+				<td>
+					<a href="#" title="Status zurücksetzen" onclick="return false;">Status zurücksetzen</a>
+				</td>
+			</tr>
+		<?php endforeach; ?>
+	</table>
+<?php endif; ?>
+
+
 </div>

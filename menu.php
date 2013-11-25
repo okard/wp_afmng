@@ -119,7 +119,8 @@ function afmng_menu_projectmng()
 		//handle actions:
 		afmng_menu_projectmng_postback();
 		//extract view
-		$view = $_POST["view"];
+		if($_POST["view"])
+			$view = $_POST["view"];
 	}
 		
 	//show right view and prepare data
@@ -128,6 +129,7 @@ function afmng_menu_projectmng()
 		case 'overview':
 			$ltpl = new LTemplate();
 			$ltpl->project_list = afmng_db_project_list();
+			$ltpl->projects_closed = afmng_db_projects_closed();
 			$ltpl->is_admin = afmng_user_cap('afmng_admin', null);
 			$ltpl->view = 'overview';
 			$ltpl->render(afmng_get_tplfile('tpl.ProjectMng.php'));

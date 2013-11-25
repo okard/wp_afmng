@@ -51,9 +51,32 @@ function afmng_db_project_list()
 	return $wpdb->get_results( 
 		"
 		SELECT p.project_id, 
-			   p.anime_name
+			   p.anime_name,
+			   p.completed,
+			   p.licensed
 		FROM ".afmngdb::$tbl_anime." as p
 		WHERE p.completed = false
+		AND p.licensed = false
+		"
+	);
+}
+
+/**
+* Return a project list
+*/
+function afmng_db_projects_closed()
+{
+	global $wpdb;
+	
+	return $wpdb->get_results( 
+		"
+		SELECT p.project_id, 
+			   p.anime_name,
+			   p.completed,
+			   p.licensed
+		FROM ".afmngdb::$tbl_anime." as p
+		WHERE p.completed = true
+		OR p.licensed = true
 		"
 	);
 }
@@ -178,6 +201,7 @@ function afmng_db_release_steps($releaseid)
 		SELECT sm.task_id,
 			   sm.step_id,
 			   s.name as step_name,
+			   s.description as step_description,
 			   sm.user,
 			   sm.state_no,
 			   sm.description

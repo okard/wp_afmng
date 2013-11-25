@@ -30,6 +30,9 @@
 <?php endif; ?>
 
 <h2>Tasks</h2>
+<?php if($this->is_admin): ?>
+	<a href="#" title="Alle Tasks löschen" onclick="return false;" >Alle Tasks löschen</a>
+<?php endif; ?>
 
 <table class="afmng_table">
 	<thead>

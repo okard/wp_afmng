@@ -12,8 +12,8 @@ Wordpress Plugin for Managing Fansub Releases of Animes
 - [ ] Remove all tasks? (from episode for deletion)
 - [ ] Unlock/Show licensed/completed project
 - [ ] Improve view of task descriptions
-- [ ] Add property to steps to show description when required
-- [ ] Make usable for all plugin user (use right caps)
+- [X] Add property to steps to show description when required
+- [X] Make usable for all plugin user (use right caps)
 - [ ] Reuseable project view (subtemplate) 
 
 ### Task Manager
