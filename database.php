@@ -510,6 +510,7 @@ function afmng_db_tasks_available($user_id)
 	
 	global $wpdb;
 	
+	//existing tasks
 	$sql =
 		"
 		SELECT
@@ -550,25 +551,28 @@ function afmng_db_tasks_available($user_id)
 		FROM
 		(SELECT 
 			sm.release_id,
-			MAX(s.step_id) as step_id
+			s.step_id as step_id
 		FROM ".afmngdb::$tbl_tasks." as sm
 		INNER JOIN ".afmngdb::$tbl_steps." as s
 			ON s.prev_step_id = sm.step_id
+			AND sm.state_no = 2
 		INNER JOIN ".afmngdb::$tbl_episode." as r 
 			ON sm.release_id = r.release_id
 		INNER JOIN ".afmngdb::$tbl_anime." as p
 			ON p.project_id = r.project_id 
 			AND p.licensed = false AND p.completed = false
-		GROUP BY 
-			sm.release_id
 		) as sm
 		INNER JOIN ".afmngdb::$tbl_steps." as s
 			ON s.step_id = sm.step_id
 		INNER JOIN ".afmngdb::$tbl_episode." as r 
 			ON sm.release_id = r.release_id
 		INNER JOIN ".afmngdb::$tbl_anime." as p
-			ON p.project_id = r.project_id 
+			ON p.project_id = r.project_id
+		LEFT OUTER JOIN ".afmngdb::$tbl_tasks." as t
+			ON t.step_id = sm.step_id
+			AND t.release_id = r.release_id
 		WHERE s.capability IN ('".implode("','",$caps)."')
+		AND (t.task_id IS NULL OR s.multiple = 1)
 		"
 		;
 	
