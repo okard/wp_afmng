@@ -11,7 +11,9 @@ class afmngdb
 	public static $step_state = array(0 => 'Offen', 1 => 'In Bearbeitung', 2 => 'Erledigt');
 	//TODO: Rückesprache erforderlich?
 	
-	public static $caps = array('afmng_rawprovider',
+	public static $caps = array('afmng_user',
+								'afmng_admin',
+								'afmng_rawprovider',
 								'afmng_translator',
 								'afmng_edit',
 								'afmng_typeset',
@@ -496,5 +498,15 @@ function afmng_db_user_getcaps($user_id)
 			
 	return $has;
 }
+
+/**
+* get all wp users
+*/ 
+function afmng_db_get_users()
+{
+	global $wpdb;
+	return $wpdb->get_results("SELECT ID, user_login, display_name FROM $wpdb->users ORDER BY ID");
+}
+
 
 ?>

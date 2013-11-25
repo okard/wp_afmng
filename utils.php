@@ -37,5 +37,17 @@ function afmng_editlink_bypagetitle($title)
 }
 
 
+/**
+* User has cap
+* Admin has all
+*/
+function afmng_user_cap($cap)
+{
+	if(is_admin())
+		return true;
+		
+	return current_user_can($cap);
+}
+
 
 ?>
