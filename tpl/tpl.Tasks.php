@@ -86,10 +86,12 @@
 </table>
 </div>
 
+<!--
 <div id="task_done">
 
 <h2>Abgeschlossene Aufgaben</h2>
 </div>
+-->
 
 <div id="task_random">
 <?php if($this->is_admin): ?>
