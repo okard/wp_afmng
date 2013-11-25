@@ -143,5 +143,31 @@ function afmng_tasks_create_assign()
 */ 
 function afmng_tasks_delete(task_id)
 {
-	alert("Not yet implemented");
+	//ajax request
+	var data = {
+		action: 'task_delete',
+		task_id: task_id
+	};
+	
+	// We can also pass the url value separately from ajaxurl for front end AJAX implementations
+	jQuery.post(ajaxurl, data, function(response) 
+	{
+		try
+		{
+			var data = JSON.parse(response);
+			
+			//check for errors
+			if(data.error)
+			{
+				alert(data.msg);
+			}
+			
+			//dummy submit
+			jQuery("#dummyForm").submit();
+		}
+		catch(e)
+		{
+			alert(e + '\n' + response);
+		}
+	});
 }

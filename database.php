@@ -10,6 +10,16 @@ class afmngdb
 	
 	public static $step_state = array(0 => 'Offen', 1 => 'In Bearbeitung', 2 => 'Erledigt');
 	//TODO: Rückesprache erforderlich?
+	
+	public static $caps = array('afmng_rawprovider',
+								'afmng_translator',
+								'afmng_edit',
+								'afmng_typeset',
+								'afmng_karaoke',
+								'afmng_qc',
+								'afmng_qcd',
+								'afmng_mux',
+								'afmng_hardsub');
 
     public static function setup() 
     {
@@ -60,6 +70,7 @@ function afmng_db_project_releases($projectid)
 			   r.episode_title
 		FROM ".afmngdb::$tbl_episode." as r
 		WHERE r.project_id=%d
+		ORDER BY r.episode_no ASC
 		",
 		$projectid
         );
@@ -447,23 +458,14 @@ function afmng_db_steps_state($state_no)
 */
 function afmng_db_user_getcaps($user_id)
 {
-	$caps = array('afmng_rawprovider',
-	              'afmng_translator',
-	              'afmng_edit',
-	              'afmng_typeset',
-	              'afmng_karaoke',
-	              'afmng_qc',
-	              'afmng_mux',
-	              'afmng_hardsub');
-	
+	if(is_admin())
+		return afmngdb::$caps;
+		
 	$has = array();
 	
-	foreach($caps as $cap)
+	foreach(afmngdb::$caps as $cap)
 		if(user_can($user_id, $cap))
 			array_push($has, $cap);
-			
-	if(is_admin())
-		return $caps;
 			
 	return $has;
 }

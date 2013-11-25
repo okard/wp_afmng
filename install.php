@@ -77,45 +77,62 @@ function afmng_install_db()
 }
 
 
-function afmng_db_add_step($step_id, $prev_step, $name, $desc, $cap)
+function afmng_db_add_step($step_id, $prev_step, $name, $desc, $cap, $multiple)
 {
 	global $wpdb;
 	
-	//check for null
-	
-	$wpdb->insert( afmngdb::$tbl_steps,  array( 
+	//check for null (wpdb is a stupid interface)
+	if($prev_step)
+	{
+		$wpdb->insert( afmngdb::$tbl_steps,  array( 
+				'step_id' => $step_id,
+				'prev_step_id' => $prev_step, 
+				'name' => $name,
+				'description' => $desc,
+				'capability' => $cap,
+				'multiple' => $multiple
+			), 
+			array( '%d', '%d', '%s', '%s', '%s', '%d') 
+		);
+	}
+	else
+	{
+		$wpdb->insert( afmngdb::$tbl_steps,  array( 
 			'step_id' => $step_id,
-			'prev_step_id' => $prev_step, 
 			'name' => $name,
 			'description' => $desc,
-			'capability' => $cap
+			'capability' => $cap,
+			'multiple' => $multiple
 		), 
-		array( '%d', '%d', '%s', '%s', '%s') 
-	);
+		array( '%d', '%s', '%s', '%s', '%d') 
+		);
+	}
 }
 
 
 function afmng_install_dbdata() 
 {
 	//Raw
-	afmng_db_add_step(0, null, 'Raw', 'Raw verfügbar', 'afmng_rawprovider');
+	afmng_db_add_step(0, null, 'Raw', 'Raw verfügbar', 'afmng_rawprovider', 0);
 	//Translation
-	afmng_db_add_step(1, 0, 'Translation', 'Übersetzung', 'afmng_translator');
+	afmng_db_add_step(1, 0, 'Translation', 'Übersetzung', 'afmng_translator', 0);
 	//Edit
-	afmng_db_add_step(2, 1, 'Edit', 'Edit', 'afmng_edit');
+	afmng_db_add_step(2, 1, 'Edit', 'Edit', 'afmng_edit', 0);
 	//Typeset
-	afmng_db_add_step(3, 2, 'Typeset', 'Typeset', 'afmng_typeset');
+	afmng_db_add_step(3, 2, 'Typeset', 'Typeset', 'afmng_typeset', 0);
 	//Karaoke
-	afmng_db_add_step(4, 3, 'Karaoke', 'Karaoke', 'afmng_karaoke');
+	afmng_db_add_step(4, 3, 'Karaoke', 'Karaoke', 'afmng_karaoke', 0);
 	//QC
-	afmng_db_add_step(5, 4, 'QC', 'Quality Check', 'afmng_qc');
+	afmng_db_add_step(5, 4, 'QC', 'Quality Check', 'afmng_qc', 1);
+	//QC Done
+	afmng_db_add_step(6, 4, 'QCD', 'Quality Check Done', 'afmng_qcd', 0);
 	//Mux
-	afmng_db_add_step(6, 5, 'Mux', 'Mux & UL', 'afmng_mux');
+	afmng_db_add_step(7, 6, 'Mux', 'Mux & UL', 'afmng_mux', 0);
 	//Hardsub
-	afmng_db_add_step(7, 6, 'Hardsub', 'Hardsub', 'afmng_hardsub');
+	afmng_db_add_step(8, 7, 'Hardsub', 'Hardsub', 'afmng_hardsub', 0);
 	
 	//V2 & Co
-	afmng_db_add_step(8, null, 'Rerelease', 'Rerelease', 'afmng_rerelease');
+	afmng_db_add_step(9, null, 'Rerelease', 'Rerelease', 'afmng_rerelease', 1);
 }
 
 
