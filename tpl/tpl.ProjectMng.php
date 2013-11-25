@@ -48,7 +48,8 @@
 			<td><?php echo $release->episode_no; ?></td>
 			<td>
 				<?php echo $release->episode_title; ?>
-				<a href="#" title="Löschen" onclick="afmng_release_delete(<?php echo $release->release_id; ?>);return false;"><div class="button_delete"></div></a>
+				<a href="#" title="Löschen" onclick="afmng_release_delete(<?php echo $release->release_id; ?>, false);return false;"><div class="button_delete"></div></a>
+				<a href="#" title="Löschen incl. Tasks" onclick="afmng_release_delete(<?php echo $release->release_id; ?>, true);return false;"><div class="button_delete"></div></a>
 			</td>
 			<td style="margin:0; padding:0;">
 				<table class="afmng_subtable">

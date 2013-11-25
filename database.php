@@ -140,7 +140,7 @@ function afmng_project_delete($project_id)
 
 
 //======================================================================
-//release functions:
+//release/episode functions:
 
 /**
 * get steps of a release
@@ -207,6 +207,25 @@ function afmng_db_release_delete($release_id)
 
 	return true;
 }
+
+/**
+* Delete a release/episode
+*/
+function afmng_db_release_delete_tasks($release_id)
+{
+	global $wpdb;
+	
+	$res = $wpdb->delete(afmngdb::$tbl_tasks, array( 'release_id' => $release_id ), array( '%d' ) );
+
+	if(!$res)
+	{
+		throw new Exception($wpdb->last_error);
+	}
+
+	return true;
+}
+
+
 
 //======================================================================
 //step functions:

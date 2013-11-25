@@ -48,7 +48,7 @@ function afmng_project_delete(project_id)
 }
 
 //delete episode/release
-function afmng_release_delete(release_id)
+function afmng_release_delete(release_id, delete_tasks)
 {
 	jQuery.jconfirm(
 	    {
@@ -64,7 +64,8 @@ function afmng_release_delete(release_id)
 			//ajax request
 			var data = {
 				action: 'episode_delete',
-				release_id: release_id
+				release_id: release_id,
+				delete_tasks: delete_tasks
 			};
 	
 			// We can also pass the url value separately from ajaxurl for front end AJAX implementations

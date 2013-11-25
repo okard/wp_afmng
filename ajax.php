@@ -151,9 +151,16 @@ function wp_ajax_episode_delete()
 	//TODO security handling
 	
 	$release_id = $_POST['release_id'];
+	$delete_tasks = filter_var($_POST['delete_tasks'], FILTER_VALIDATE_BOOLEAN);
 	
 	try 
 	{
+		if($delete_tasks)
+		{
+			//delete all tasks from episode
+			afmng_db_release_delete_tasks($release_id);
+		}
+		
 		afmng_db_release_delete($release_id);
 		ob_clean();
 		echo json_encode(true);
