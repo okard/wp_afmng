@@ -74,6 +74,9 @@ function afmng_install_db()
 	}
 	
 	//add capibilities
+    $role = get_role( 'administrator' );
+    $role->add_cap( 'afmng_user' ); 
+    $role->add_cap( 'afmng_admin' ); 
 }
 
 

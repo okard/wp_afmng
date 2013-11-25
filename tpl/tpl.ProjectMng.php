@@ -8,6 +8,7 @@
 	<div class="project_box">
 	<h1><?php echo $project->anime_name; ?></h1>
 	
+	<?php if($this->is_admin): ?>
 	<h3><a href="#" onclick="jQuery('#frmMngProject\\:<?php echo $project->project_id; ?>').toggle('slow'); return false;">Projekt Management</a></h3>
 	<form id="frmMngProject:<?php echo $project->project_id; ?>" method="post" action="" style="display:none">
 		<input type="hidden" name="action" value="update_project" />
@@ -30,6 +31,7 @@
 			</tr>
 		</table>
 	</form>
+	<?php endif; ?>
 	
 	
 	<h2>Releases</h2>
@@ -48,8 +50,10 @@
 			<td><?php echo $release->episode_no; ?></td>
 			<td>
 				<?php echo $release->episode_title; ?>
+				<?php if($this->is_admin): ?>
 				<a href="#" title="Löschen" onclick="afmng_release_delete(<?php echo $release->release_id; ?>, false);return false;"><div class="button_delete"></div></a>
 				<a href="#" title="Löschen incl. Tasks" onclick="afmng_release_delete(<?php echo $release->release_id; ?>, true);return false;"><div class="button_delete"></div></a>
+				<?php endif; ?>
 			</td>
 			<td style="margin:0; padding:0;">
 				<table class="afmng_subtable">
@@ -73,7 +77,7 @@
 	</table>
 	
 	
-	
+	<?php if($this->is_admin): ?>
 	<h3><a href="#" onclick="jQuery('#frmAddRelease\\:<?php echo $project->project_id; ?>').toggle('slow'); return false;">Release hinzufügen</a></h3>
 	
 	<form id="frmAddRelease:<?php echo $project->project_id; ?>" method="post" action="" style="display:none">
@@ -95,9 +99,15 @@
 		
 		</table>
 	</form>
+	<?php endif; ?>
+	
 	</div>
 <?php endforeach; ?>
 
+<?php print_r($this->is_admin); ?>
+<?php print_r(afmng_user_cap('afmng_admin', null)); ?>
+
+<?php if($this->is_admin === true): ?>
 <div id="project_add">
 <h2>Projekt hinzufügen</h2>	
 <form id="frmAddProject" method="post" action="">
@@ -114,4 +124,6 @@
 	</table>
 </form>
 </div>
+<?php endif; ?>
+
 </div>

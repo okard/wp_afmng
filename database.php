@@ -506,9 +506,9 @@ function afmng_db_steps_state($state_no)
 */
 function afmng_db_user_getcaps($user_id)
 {
-	if(is_admin())
+	if(user_can($user_id, 'afmng_admin'))
 		return afmngdb::$caps;
-		
+	
 	$has = array();
 	
 	foreach(afmngdb::$caps as $cap)

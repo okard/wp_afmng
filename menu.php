@@ -5,22 +5,21 @@ add_action( 'admin_menu', 'afmng_menu_setup' );
 /* Setup AFMNG Menus*/
 function afmng_menu_setup() 
 {
-
 	//only if caps are ok?:
-	if(afmng_user_cap('afmng_user'))
+	if(afmng_user_cap('afmng_user', null))
 	{
 		//add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
-		add_menu_page('Aufgaben', 'Aufgaben', 'publish_posts', 'afmng_menu_tasks', 'afmng_menu_tasks', null, 3);
+		add_menu_page('Aufgaben', 'Aufgaben', 'afmng_user', 'afmng_menu_tasks', 'afmng_menu_tasks', null, 3);
 	
 		//Project Manager
-		add_submenu_page('afmng_menu_tasks', 'Projekt Manager', 'Projekt Manager', 'publish_posts', 'afmng_menu_projectmng', 'afmng_menu_projectmng');
+		add_submenu_page('afmng_menu_tasks', 'Projekt Manager', 'Projekt Manager', 'afmng_user', 'afmng_menu_projectmng', 'afmng_menu_projectmng');
 	
 		//Completed Projects?
 		
-		if(afmng_user_cap('afmng_admin'))
+		if(afmng_user_cap('afmng_admin', null))
 		{
 			//User Manager
-			add_submenu_page('afmng_menu_tasks', 'User Manager', 'User Manager', 'publish_posts', 'afmng_menu_usermng', 'afmng_menu_usermng');
+			add_submenu_page('afmng_menu_tasks', 'User Manager', 'User Manager', 'afmng_admin', 'afmng_menu_usermng', 'afmng_menu_usermng');
 			//Manage Steps? Show Steps?
 		}
 	}
@@ -77,7 +76,7 @@ function afmng_menu_tasks()
 	
 	//own tasks
 	
-	$ltpl->is_admin = is_admin();
+	$ltpl->is_admin = afmng_user_cap('afmng_admin', null);
 	
 	//render template
 	$ltpl->render(afmng_get_tplfile('tpl.Tasks.php'));
@@ -117,7 +116,7 @@ function afmng_menu_projectmng()
 	
 	$ltpl = new LTemplate();
 	$ltpl->project_list = afmng_db_project_list();
-	$ltpl->is_admin = is_admin();
+	$ltpl->is_admin = afmng_user_cap('afmng_admin', null);
 	
 	//render page
 	$ltpl->render(afmng_get_tplfile('tpl.ProjectMng.php'));

@@ -15,7 +15,7 @@
 		<tr>
 			<td><?php echo $user->user_login; ?></td>
 			<?php foreach($this->caps as $cap): ?>
-				<td><?php echo afmng_user_cap($cap) ? 'y' : 'n'; ?></td>
+				<td><?php echo afmng_user_cap($cap, $user->ID) ? 'y' : 'n'; ?></td>
 			<?php endforeach; ?>
 		</tr>
 	<?php endforeach; ?>

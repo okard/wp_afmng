@@ -41,11 +41,12 @@ function afmng_editlink_bypagetitle($title)
 * User has cap
 * Admin has all
 */
-function afmng_user_cap($cap)
+function afmng_user_cap($cap, $user_id)
 {
-	if(is_admin())
-		return true;
-		
+	if($user_id != null)
+	{
+		return user_can($user_id, $cap);
+	}
 	return current_user_can($cap);
 }
 
