@@ -3,19 +3,19 @@
 add_action( 'admin_menu', 'afmng_menu_setup' );
 
 /* Setup AFMNG Menus*/
-function afmng_menu_setup() 
+function afmng_menu_setup()
 {
 	//only if caps are ok?:
 	if(afmng_user_cap('afmng_user', null))
 	{
 		//add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
 		add_menu_page('Aufgaben', 'Aufgaben', 'afmng_user', 'afmng_menu_tasks', 'afmng_menu_tasks', null, 3);
-	
+
 		//Project Manager
 		add_submenu_page('afmng_menu_tasks', 'Projekt Manager', 'Projekt Manager', 'afmng_user', 'afmng_menu_projectmng', 'afmng_menu_projectmng');
-	
+
 		//Completed Projects?
-		
+
 		if(afmng_user_cap('afmng_admin', null))
 		{
 			//User Manager
@@ -23,28 +23,28 @@ function afmng_menu_setup()
 			//Manage Steps? Show Steps?
 		}
 	}
-	
-	
+
+
 }
 
 /**
 * Stylesheets and scripts
 */
 add_action( 'admin_enqueue_scripts', 'afmng_menu_script_styles');
-function afmng_menu_script_styles($hook) 
+function afmng_menu_script_styles($hook)
 {
 	wp_register_style( 'afmng_plugin_css', AFMNG_PLUGINURL.'tpl/style.css', false, '1.0.0' );
     wp_enqueue_style( 'afmng_plugin_css' );
-    
+
     //for confirmation boxes
     wp_enqueue_script('afmng_plugin_jconfirm', AFMNG_PLUGINURL.'js/jquery.jconfirm-1.0.min.js');
-    
+
 	switch($_GET["page"])
 	{
 		case 'afmng_menu_tasks':
 			wp_enqueue_script('afmng_menu_tasks_scripts', AFMNG_PLUGINURL.'js/tasks.js');
 			break;
-				
+
 		case 'afmng_menu_projectmng':
 			wp_enqueue_script('afmng_menu_projectmng_scripts', AFMNG_PLUGINURL.'js/projectmng.js');
 			break;
@@ -61,23 +61,23 @@ function afmng_menu_tasks()
 {
 	//get_current_user_id();
 	$current_user = wp_get_current_user();
-	
+
 	//check for required stuff?
 	// * a parent "Projekte" page
-	
+
 	if(afmng_check_post())
 		afmng_menu_tasks_postback();
-	
+
 	$ltpl = new LTemplate();
 	$ltpl->tasks = afmng_db_gettasks($current_user->user_login);
 	$ltpl->user = $current_user->user_login;
-	
+
 	$ltpl->tasks_available =  afmng_db_tasks_available($current_user->ID);
-	
+
 	//own tasks
-	
+
 	$ltpl->is_admin = afmng_user_cap('afmng_admin', null);
-	
+
 	//render template
 	$ltpl->render(afmng_get_tplfile('tpl.Tasks.php'));
 }
@@ -89,9 +89,9 @@ function afmng_menu_tasks_postback()
 {
 	//check if user has the rights
 	//if( !current_user_can( 'manage_options' )
-	
+
 	//admin_task_add
-	
+
 	switch($_POST["action"])
 	{
 		case 'admin_task_add':
@@ -106,14 +106,14 @@ function afmng_menu_tasks_postback()
 function afmng_menu_projectmng()
 {
 	//right check
-	
+
 	//create subpages?
 	//-project (single project + episodes)
 	//-episode (single episode + tasks)
-	
+
 	//extract view
 	$view = 'overview';
-	
+
 	if(afmng_check_post())
 	{
 		//handle actions:
@@ -122,7 +122,7 @@ function afmng_menu_projectmng()
 		if($_POST["view"])
 			$view = $_POST["view"];
 	}
-		
+
 	//show right view and prepare data
 	switch($view)
 	{
@@ -138,7 +138,8 @@ function afmng_menu_projectmng()
 			$ltpl = new LTemplate();
 			if($_POST["release_id"])
 			{
-				$ltpl->episode = afmng_db_release_get($_POST["release_id"])[0];
+				$episode = afmng_db_release_get($_POST["release_id"]);
+				$ltpl->episode = $episode[0];
 				$ltpl->tasks = afmng_db_release_steps($_POST["release_id"]);
 			}
 			$ltpl->is_admin = afmng_user_cap('afmng_admin', null);
@@ -158,7 +159,7 @@ function afmng_menu_projectmng_postback()
 		case 'add_project':
 			afmng_project_add($_POST["anime_name"]);
 			break;
-			
+
 		case 'update_project':
 			afmng_project_update($_POST["project_id"], $_POST["anime_name"], isset($_POST['completed']), isset($_POST['licensed']) );
 			break;
@@ -166,7 +167,7 @@ function afmng_menu_projectmng_postback()
 		case 'add_release':
 			afmng_db_release_add($_POST["project_id"], $_POST["episode_no"], $_POST["episode_title"]);
 			break;
-			
+
 		case 'episode_update':
 			 afmng_db_release_update($_POST["release_id"], $_POST["episode_no"], $_POST["episode_title"]);
 			break;
@@ -182,8 +183,8 @@ function afmng_menu_usermng()
 	{
 		afmng_menu_usermng_postback();
 	}
-		
-		
+
+
 	$ltpl = new LTemplate();
 	$ltpl->users = afmng_db_get_users();
 	$ltpl->caps = afmngdb::$caps;
@@ -202,7 +203,7 @@ function afmng_menu_usermng_postback()
 			foreach(afmng_db_get_users() as $user)
 			{
 				$user = new WP_User($user->ID);
-				
+
 				foreach(afmngdb::$caps as $cap)
 				{
 					if(!$user->has_cap($cap) && $_POST[$cap.':'.$user->ID])
