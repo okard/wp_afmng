@@ -13,20 +13,20 @@ function afmng_install_db()
 		//debug: call dbDelta each activation time
 		update_option( "afmng_db_version", '0.0');
 	}
-	
+
 	global $wpdb;
 	$afmng_db_ver_current = '0.1';
 	$afmng_db_ver_installed = get_option( "afmng_db_version" );
 
-	if( $afmng_db_ver_installed != $afmng_db_ver_current ) 
+	if( $afmng_db_ver_installed != $afmng_db_ver_current )
 	{
-		
+
 		//get table names
 		$tbl_anime =  afmngdb::$tbl_anime;
 		$tbl_episode =  afmngdb::$tbl_episode;
 		$tbl_steps = afmngdb::$tbl_steps;
 		$tbl_tasks = afmngdb::$tbl_tasks;
-		
+
 		//sql script
 		$sql = "CREATE TABLE ".$tbl_anime." (
 				project_id mediumint(9) NOT NULL AUTO_INCREMENT,
@@ -64,78 +64,80 @@ function afmng_install_db()
 				FOREIGN KEY (step_id) REFERENCES $tbl_steps (step_id)
 				);
 				";
-				
+
 	  file_put_contents(AFMNG_PLUGINDIR.'/sql/afmngdb.sql', $sql);
-	  
+
 	  require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	  $result = dbDelta( $sql );
-	  
+
 	  update_option( "afmng_db_version", $afmng_db_ver_current );
 	}
-	
+
 	//add capibilities
     $role = get_role( 'administrator' );
-    $role->add_cap( 'afmng_user' ); 
-    $role->add_cap( 'afmng_admin' ); 
+    $role->add_cap( 'afmng_user' );
+    $role->add_cap( 'afmng_admin' );
 }
 
 
 function afmng_db_add_step($step_id, $prev_step, $name, $desc, $cap, $multiple)
 {
 	global $wpdb;
-	
+
 	//check for null (wpdb is a stupid interface)
 	if($prev_step)
 	{
-		$wpdb->insert( afmngdb::$tbl_steps,  array( 
+		$wpdb->insert( afmngdb::$tbl_steps,  array(
 				'step_id' => $step_id,
-				'prev_step_id' => $prev_step, 
+				'prev_step_id' => $prev_step,
 				'name' => $name,
 				'description' => $desc,
 				'capability' => $cap,
 				'multiple' => $multiple
-			), 
-			array( '%d', '%d', '%s', '%s', '%s', '%d') 
+			),
+			array( '%d', '%d', '%s', '%s', '%s', '%d')
 		);
 	}
 	else
 	{
-		$wpdb->insert( afmngdb::$tbl_steps,  array( 
+		$wpdb->insert( afmngdb::$tbl_steps,  array(
 			'step_id' => $step_id,
 			'name' => $name,
 			'description' => $desc,
 			'capability' => $cap,
 			'multiple' => $multiple
-		), 
-		array( '%d', '%s', '%s', '%s', '%d') 
+		),
+		array( '%d', '%s', '%s', '%s', '%d')
 		);
 	}
 }
 
 
-function afmng_install_dbdata() 
+function afmng_install_dbdata()
 {
+	//ids starts with 1. 0 not possible
+
 	//Raw
-	afmng_db_add_step(0, null, 'Raw', 'Raw verfügbar', 'afmng_rawprovider', 0);
+	afmng_db_add_step(1, null, 'Raw', 'Raw verfügbar', 'afmng_rawprovider', 0);
 	//Translation
-	afmng_db_add_step(1, 0, 'Translation', 'Übersetzung', 'afmng_translator', 0);
+	afmng_db_add_step(2, 1, 'Translation', 'Übersetzung', 'afmng_translator', 0);
 	//Edit
-	afmng_db_add_step(2, 1, 'Edit', 'Edit', 'afmng_edit', 0);
+	afmng_db_add_step(3, 2, 'Edit', 'Edit', 'afmng_edit', 0);
 	//Typeset
-	afmng_db_add_step(3, 2, 'Typeset', 'Typeset', 'afmng_typeset', 0);
+	afmng_db_add_step(4, 3, 'Typeset', 'Typeset', 'afmng_typeset', 0);
 	//Karaoke
-	afmng_db_add_step(4, 3, 'Karaoke', 'Karaoke', 'afmng_karaoke', 0);
+	afmng_db_add_step(5, 4, 'Karaoke', 'Karaoke', 'afmng_karaoke', 0);
 	//QC
-	afmng_db_add_step(5, 4, 'QC', 'Quality Check', 'afmng_qc', 1);
+	afmng_db_add_step(6, 5, 'QC', 'Quality Check', 'afmng_qc', 1);
 	//QC Done
-	afmng_db_add_step(6, 4, 'QCD', 'Quality Check Done', 'afmng_qcd', 0);
+	afmng_db_add_step(7, 5, 'QCD', 'Quality Check Done', 'afmng_qcd', 0);
 	//Mux
-	afmng_db_add_step(7, 6, 'Mux', 'Mux & UL', 'afmng_mux', 0);
+	afmng_db_add_step(8, 7, 'Mux', 'Mux & UL', 'afmng_mux', 0);
 	//Hardsub
-	afmng_db_add_step(8, 7, 'Hardsub', 'Hardsub', 'afmng_hardsub', 0);
-	
+	afmng_db_add_step(9, 8, 'Hardsub', 'Hardsub', 'afmng_hardsub', 0);
+
 	//V2 & Co
-	afmng_db_add_step(9, null, 'Rerelease', 'Rerelease', 'afmng_rerelease', 1);
+	afmng_db_add_step(10, null, 'Rerelease', 'Rerelease', 'afmng_rerelease', 1);
 }
 
 

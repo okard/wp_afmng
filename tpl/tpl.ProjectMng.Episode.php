@@ -15,7 +15,7 @@
 		<input name="release_id" type="hidden" value="<?php echo $this->episode->release_id; ?>"/>
 		<input name="episode_no" type="text" value="<?php echo $this->episode->episode_no; ?>" />
 		<input name="episode_title" type="text" value="<?php echo $this->episode->episode_title; ?>" />
-		
+
 		<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Speichern') ?>" />
 	</form>
 <?php else: ?>
@@ -44,18 +44,35 @@
 			<th></th>
 		</tr>
 	</thead>
-	
+
 	<?php foreach($this->tasks as $task): ?>
 	<tr>
 		<td><?php echo $task->step_name; ?></td>
 		<td><?php echo $task->user; ?></td>
-		<td><?php echo afmng_db_steps_state($task->state_no); ?></td>
-		<td><?php echo $task->description; ?></td>
 		<td>
 			<?php if($this->is_admin): ?>
-				<a href="#" title="Speichern" onclick="return false;">Speichern</a>
+				<form>
+				<select id="state_no:<?php echo $task->task_id; ?>" name="state_no">
+					<?php foreach(afmngdb::$step_state as $key => $value): ?>
+						<option value="<?php echo $key; ?>" <?php echo $key == $task->state_no ? 'selected' : '' ?>><?php echo $value; ?></option>
+					<?php endforeach; ?>
+				</select>
+				</form>
+			<?php else: ?>
+				<?php echo afmng_db_steps_state($task->state_no); ?><
+			<?php endif; ?>
+		</td>
+		<td>
+			<?php if($this->is_admin): ?>
+				<input id="description:<?php echo $task->task_id; ?>" type="text" name="description" value="<?php echo $task->description; ?>" /></td>
+			<?php else: ?>
+				<?php echo $task->description; ?>
+			<?php endif; ?>
+		<td>
+			<?php if($this->is_admin): ?>
+				<a href="#" title="Speichern" onclick="afmng_tasks_update(<?php echo $task->task_id; ?>);return false;">Speichern</a>
 				<a href="#" title="Löschen" onclick="afmng_tasks_delete(<?php echo $task->task_id; ?>); return false;">Löschen</a>
-				
+
 				<?php if($task->user): ?>
 					<a href="#" title="Freigeben" onclick="afmng_tasks_free(<?php echo $task->task_id; ?>); return false;">Freigeben</a>
 				<?php endif; ?>

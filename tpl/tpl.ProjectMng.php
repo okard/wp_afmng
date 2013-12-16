@@ -8,7 +8,7 @@
 <?php foreach($this->project_list as $project): ?>
 	<div class="project_box">
 	<h1><?php echo $project->anime_name; ?></h1>
-	
+
 	<?php if($this->is_admin): ?>
 	<h3><a href="#" onclick="jQuery('#frmMngProject\\:<?php echo $project->project_id; ?>').toggle('slow'); return false;">Projekt Management</a></h3>
 	<form id="frmMngProject:<?php echo $project->project_id; ?>" method="post" action="" style="display:none">
@@ -33,10 +33,10 @@
 		</table>
 	</form>
 	<?php endif; ?>
-	
-	
+
+
 	<h2>Releases</h2>
-	
+
 	<table class="afmng_table">
 		<thead>
 			<tr>
@@ -56,7 +56,6 @@
 			<td>
 				<?php echo $release->episode_title; ?>
 				<?php if($this->is_admin): ?>
-				<a href="#" title="Löschen" onclick="afmng_release_delete(<?php echo $release->release_id; ?>, false);return false;"><div class="button_delete"></div></a>
 				<a href="#" title="Löschen incl. Tasks" onclick="afmng_release_delete(<?php echo $release->release_id; ?>, true);return false;"><div class="button_delete"></div></a>
 				<?php endif; ?>
 			</td>
@@ -71,24 +70,31 @@
 					</thead>
 					<tr>
 					<?php foreach($steps as $step): ?>
-						<td class="status_<?php echo $step->state_no; ?>"><?php echo empty($step->user) ? '(Offen)' : $step->user; ?>  <a href='javascript:;' title="<?php echo $step->description; ?>">&nbsp;</a></td>
+						<td class="status_<?php echo $step->state_no; ?>">
+							<?php if($step->step_name == 'Raw'): ?>
+								<?php echo $step->description; ?>
+							<?php else: ?>
+								<?php echo empty($step->user) ? '(Offen)' : $step->user; ?>
+								<a href='return false;' title="<?php echo $step->description; ?>">&nbsp;</a>
+							<?php endif; ?>
+						</td>
 					<?php endforeach; ?>
 					</tr>
 				</table>
 			</td>
 		</tr>
-	
+
 	<?php endforeach; ?>
 	</table>
-	
-	
+
+
 	<?php if($this->is_admin): ?>
 	<h3><a href="#" onclick="jQuery('#frmAddRelease\\:<?php echo $project->project_id; ?>').toggle('slow'); return false;">Release hinzufügen</a></h3>
-	
+
 	<form id="frmAddRelease:<?php echo $project->project_id; ?>" method="post" action="" style="display:none">
 		<input type="hidden" name="action" value="add_release" />
 		<input type="hidden" name="project_id" value="<?php echo $project->project_id; ?>" />
-		
+
 		<table>
 			<thead>
 				<tr>
@@ -101,17 +107,17 @@
 				<td><input name="episode_title" type="text" /></td>
 				<td><input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Hinzufügen') ?>" /></td>
 			</tr>
-		
+
 		</table>
 	</form>
 	<?php endif; ?>
-	
+
 	</div>
 <?php endforeach; ?>
 
 <?php if($this->is_admin): ?>
 <div id="project_add">
-<h2>Projekt hinzufügen</h2>	
+<h2>Projekt hinzufügen</h2>
 <form id="frmAddProject" method="post" action="">
 	<input type="hidden" name="action" value="add_project" />
 

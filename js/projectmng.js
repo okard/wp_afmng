@@ -7,15 +7,15 @@ function afmng_do_form_post(data)
 {
 	//add key/value from data
 	var form = jQuery("#dummyForm");
-	
-	jQuery.each(data, function(key, value) 
+
+	jQuery.each(data, function(key, value)
 	{
 		jQuery("<input type='hidden' />")
 		.attr("name", key)
 		.attr("value", value)
 		.appendTo(form);
 	});
-	
+
 	form.submit();
 }
 
@@ -25,18 +25,18 @@ function afmng_do_form_post(data)
 function afmng_do_ajax_post(data)
 {
 	// We can also pass the url value separately from ajaxurl for front end AJAX implementations
-	jQuery.post(ajaxurl, data, function(response) 
+	jQuery.post(ajaxurl, data, function(response)
 	{
 		try
 		{
 			var data = JSON.parse(response);
-			
+
 			//check for errors
 			if(data.error)
 			{
 				alert(data.msg);
 			}
-			
+
 			//dummy submit
 			jQuery("#dummyForm").submit();
 		}
@@ -58,11 +58,11 @@ function afmng_project_delete(project_id)
 			message: 'Dieses Projekt ('+project_id+') wirklich löschen?',
 			confirm: 'Ja',
 			cancel: 'Nein'
-		}, 
-		function() 
+		},
+		function()
 		{
 			//make an ajax delete request
-				
+
 			//ajax request
 			var data = {
 				action: 'project_delete',
@@ -84,11 +84,11 @@ function afmng_release_delete(release_id, delete_tasks)
 			message: 'Diesen Release ('+release_id+') wirklich löschen?',
 			confirm: 'Ja',
 			cancel: 'Nein'
-		}, 
-		function() 
+		},
+		function()
 		{
 			//make an ajax delete request
-				
+
 			//ajax request
 			var data = {
 				action: 'episode_delete',
@@ -114,8 +114,8 @@ function afmng_episode_show(release_id)
 		view: 'episode',
 		release_id: release_id
 	};
-			
-	afmng_do_form_post(data);	
+
+	afmng_do_form_post(data);
 }
 
 /**
@@ -129,8 +129,8 @@ function afmng_project_clear_status(project_id)
 			message: 'Status des Projekts ('+project_id+') wirklich zurücksetzen?',
 			confirm: 'Ja',
 			cancel: 'Nein'
-		}, 
-		function() 
+		},
+		function()
 		{
 			//ajax request
 			var data = {
@@ -145,7 +145,7 @@ function afmng_project_clear_status(project_id)
 
 /**
 * Delete a task
-*/ 
+*/
 function afmng_tasks_delete(task_id)
 {
 	//ajax request
@@ -153,6 +153,29 @@ function afmng_tasks_delete(task_id)
 		action: 'task_delete',
 		task_id: task_id
 	};
+	afmng_do_ajax_post(data);
+}
+
+
+/**
+* Update a task for a user
+*/
+function afmng_tasks_update(task_id)
+{
+	//extract state_no
+	//extract description
+	var state_no = jQuery("#state_no\\:"+task_id).val();
+	var description = jQuery("#description\\:"+task_id).val();
+
+	//ajax request
+	var data = {
+		action: 'task_update',
+		task_id: task_id,
+		state_no: state_no,
+		description: description
+	};
+
+	//alert(JSON.stringify(data));
 	afmng_do_ajax_post(data);
 }
 
@@ -181,8 +204,8 @@ function afmng_episode_delete_tasks(release_id)
 			message: 'Alle Aufgaben der Episode('+release_id+') wirklich löschen?',
 			confirm: 'Ja',
 			cancel: 'Nein'
-		}, 
-		function() 
+		},
+		function()
 		{
 			//ajax request
 			var data = {
