@@ -1,11 +1,18 @@
+<div id="afmng_content">
+
+<div id="afmng_header">
+Anime Fansub Manager
+</div>
+
 <div id="afmng_body">
-<h1>Anime Fansub Manager</h1>
+
+<form id="dummyForm" method="post" action=""></form>
 
 <div id="task_current">
 
-<h2>Meine aktuellen Aufgaben (<?php echo $this->user; ?>)</h2>
+<div id="task_current_header">Meine aktuellen Aufgaben (<?php echo $this->user; ?>)</div>
 
-<table>
+<table class="afmng_table">
 	<thead>
 		<tr>
 		<th>Anime</th>
@@ -25,30 +32,31 @@
 		<td><?php echo $task->name; ?></td>
 		<td>
 			<form>
-			<select name="state_no">
+			<select id="state_no:<?php echo $task->task_id; ?>" name="state_no">
 				<?php foreach(afmngdb::$step_state as $key => $value): ?>
 					<option value="<?php echo $key; ?>" <?php echo $key == $task->state_no ? 'selected' : '' ?>><?php echo $value; ?></option>
 				<?php endforeach; ?>
 			</select>
 			</form>
 		</td>
-		<td><?php echo $task->description; ?></td>
-		<td>Speichern</td>
+		<td><input id="description:<?php echo $task->task_id; ?>" type="text" name="description" value="<?php echo $task->description; ?>" /></td>
+		<td>
+			<a href="#" onclick="afmng_tasks_update(<?php echo $task->task_id;?>); return false;">Speichern</a>
+			<a href="#" onclick="afmng_tasks_free(<?php echo $task->task_id;?>); return false;">Freigeben</a>
+		</td>
 	</tr>
 	<?php endforeach; ?>
 </table>
 </div>
 
-<!-- Hidden Form -->
-
 <div id="task_available">
 			
-<h2>Verfügbare Aufgaben</h2>
+<div id="task_available_header">Verfügbare Aufgaben</div>
 <!-- available releases and follow releases when the step before is done -->
 
 <!-- if admin add option to add any tasks -->
 
-<table>
+<table class="afmng_table">
 	<thead>
 		<tr>
 			<th>Anime</th>
@@ -63,7 +71,19 @@
 			<td><?php echo $task->anime_name; ?></td>
 			<td><?php echo $task->episode_no, ' / ', $task->episode_title; ?></td>
 			<td><?php echo $task->name; ?></td>
-			<td>Annehmen Löschen</td>
+			<td>
+				
+				<?php if($task->task_id): ?>
+				
+					<a href="#" onclick="afmng_tasks_accept(<?php echo $task->task_id; ?>); return false;">Annehmen</a>
+					<?php if($this->is_admin):  ?>
+						<a href="#" onclick="afmng_tasks_delete(<?php echo $task->task_id; ?>); return false;">Löschen</a>
+					<?php endif;  ?>
+				<?php else: ?>
+				
+					<a href="#" onclick="afmng_tasks_create_assign(<?php echo $task->release_id; ?>, <?php echo $task->step_id; ?>); return false;">Anlegen und annehmen</a>
+				<?php endif; ?>
+			</td>
 		</tr>
 	<?php endforeach; ?>
 	
@@ -71,14 +91,16 @@
 </table>
 </div>
 
+<!--
 <div id="task_done">
 
 <h2>Abgeschlossene Aufgaben</h2>
 </div>
+-->
 
 <div id="task_random">
 <?php if($this->is_admin): ?>
-	<h2>Beliebige Aufgabe hinzufügen</h2>
+	<div id="task_random_header">Beliebige Aufgabe hinzufügen</div>
 	
 	<form id="admin_task_add" method="post" action="">
 	<input type="hidden" name="action" value="admin_task_add" />
@@ -117,10 +139,11 @@
 			</td>
 		</tr>
 	</table>
-	
+	<br>
 	<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Hinzufügen') ?>" />
 	
 	</form>
 <?php endif; ?>
+</div>
 </div>
 </div>
