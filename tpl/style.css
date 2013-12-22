@@ -1,0 +1,248 @@
+h2 {
+padding-bottom: 5px;
+border-bottom: solid 1px #CCCCCC;
+}
+<<<<<<< HEAD
+
+#afmng_content{
+=======
+#afmng_body{
+padding: 20px;
+margin: 0px;
+>>>>>>> upstream/master
+border: solid 1px #CCCCCC;
+color: #282828;
+font-family: 'Source Sans Pro', sans-serif;
+}
+
+#afmng_header{
+background-color: #497CA7;
+color: #fff;
+padding: 20px;
+font-family: Segoe UI, Segoe UI Light;
+font-size: 20px;
+background-image: url(./matanelogo.png);
+background-repeat:no-repeat;
+background-position:right center;
+}
+
+#afmng_body{
+padding: 0 20px 20px 20px;
+}
+
+.project_box{
+padding: 20px 0 20px 0;
+}
+
+<<<<<<< HEAD
+.project_box_title {
+line-height:30px;
+padding: 0 20px 0 20px;
+background-color: #f0f0f0;
+color: #282828;
+font-family: Segoe UI, Segoe UI Light;
+border: solid 1px #CCCCCC;
+font-size: 18px;
+font-weight: normal;
+margin: .67em 0;
+=======
+.project_box h1 {
+	background-color: #eee;
+	line-height:1.5em;
+	padding: 0 20px 0 20px;
+	border-bottom: 1px solid blue;
+}
+
+#project_add{
+padding: 20px 0 20px 0;
+>>>>>>> upstream/master
+}
+
+#project_done_header, #project_add_header, #task_current_header, #task_available_header, #task_random_header {
+line-height:30px;
+padding: 0 20px 0 20px;
+background-color: #497CA7;
+color: #fff;
+font-family: Segoe UI, Segoe UI Light;
+border: solid 1px #CCCCCC;
+font-size: 18px;
+font-weight: normal;
+margin: .67em 0;
+}
+
+
+#task_current{
+padding: 20px 0 20px 0;
+}
+
+#task_available{
+padding: 20px 0 20px 0;
+
+}
+
+#task_done{
+padding: 20px 0 20px 0;
+}
+
+#task_random{
+padding: 20px 0 20px 0;
+}
+
+<<<<<<< HEAD
+#update_user_caps {
+padding: 20px;
+}
+
+div.button_settings{
+	background-image: url(./icon_settings.png);
+	background-size:100%;
+	width:16px;
+	height:16px;
+	display:inline-block;
+	float:right;
+	margin-top: 8px;
+}
+
+div.button_add{
+	background-image: url(./icon_add.png);
+	background-size:100%;
+	width:16px;
+	height:16px;
+	display:inline-block;
+	float:right;
+	margin-top: 8px;
+	margin-right: 8px;
+}
+=======
+>>>>>>> upstream/master
+
+div.button_delete{
+	background-image: url(./icon_delete.png);
+	background-size:100%;
+	width:16px;
+	height:16px;
+	display:inline-block;
+}
+<<<<<<< HEAD
+div.button_notes{
+	background-image: url(./icon_notes.png);
+	background-size:100%;
+	width:16px;
+	height:16px;
+	display:inline-block;
+}
+
+=======
+>>>>>>> upstream/master
+
+.jconfirm_wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#102000000, endColorstr=#102000000);
+}
+
+.jconfirm_inner {
+    background: #fff;
+    padding: 20px;
+    padding-top: 10px;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.jconfirm_message:empty {
+    height: 20px;
+}
+
+.jconfirm_buttons {
+    text-align: center;
+    margin: 10px 0 14px;
+}
+
+.jconfirm_buttons a {
+	padding: 0.5em;
+	margin-left: 1em;
+	margin-right: 1em;
+	
+	border:1px solid;
+	background-color: #21759B;
+    background-image: linear-gradient(to bottom, #2A95C5, #21759B);
+    border-color: #21759B #21759B #1E6A8D;
+    box-shadow: 0 1px 0 rgba(120, 200, 230, 0.5) inset;
+    color: #FFFFFF;
+    text-decoration: none;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+
+/* status styles */
+.status_0 { /*Offen*/
+	background-color:red;
+}
+
+.status_1 { /*In Bearbeitung*/
+	background-color:yellow;
+}
+
+.status_2 { /*Erledigt*/
+<<<<<<< HEAD
+	background-color:#00b050;
+=======
+	background-color:green;
+>>>>>>> upstream/master
+}
+
+/* step styles */
+.step_1 { /* raw should be 0 */
+	background-color:gray;
+} 
+
+
+/* table formatting */
+
+.afmng_table
+{
+	border-collapse: collapse;
+	caption-side:top;
+	padding: 0 1px 0 1px;
+	border: 1px solid #777;
+	empty-cells:show;
+}
+
+.afmng_table thead {
+	border-bottom: 2px solid #777;
+}
+
+.afmng_table th {
+	vertical-align:top;
+	padding:0 5px 0 5px;
+	border-left:1px solid #777;
+}
+
+.afmng_table td {
+	vertical-align:top;
+	border: 1px solid #777;
+	margin:0;
+	padding:0 5px 0 5px;
+}
+
+.afmng_subtable {
+	border-collapse: collapse;
+	border:0px;
+}
+
+.afmng_subtable th {
+	border:0px;
+	padding:0 5px 0 5px;
+	border-left: 1px solid #777;
+}
+.afmng_subtable td {
+	border:0px;
+	padding:0 5px 0 5px;
+	border-left: 1px solid #777;
+}
