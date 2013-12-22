@@ -37,5 +37,24 @@ function afmng_editlink_bypagetitle($title)
 }
 
 
+/**
+* User has cap
+* Admin has all
+*/
+function afmng_user_cap($cap, $user_id)
+{
+	//admin always has all caps
+	if($user_id != null && user_can($user_id, 'afmng_admin'))
+		return true;
+	else if ($user_id == null && current_user_can('afmng_admin'))
+		return true;
+	
+	if($user_id != null)
+	{
+		return user_can($user_id, $cap);
+	}
+	return current_user_can($cap);
+}
+
 
 ?>

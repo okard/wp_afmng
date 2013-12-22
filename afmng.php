@@ -16,10 +16,10 @@ define('AFMNG_DEBUG', true);
 
 
 //Libraries
-include_once(AFMNG_PLUGINDIR.'/utils.php');
 include_once(AFMNG_PLUGINDIR.'/database.php');
 include_once(AFMNG_PLUGINDIR.'/ajax.php');
 include_once(AFMNG_PLUGINDIR.'/LTemplate.php');
+include_once(AFMNG_PLUGINDIR.'/utils.php');
 
 //Plugin Install/Deinstall Functions
 include_once(AFMNG_PLUGINDIR.'/install.php');

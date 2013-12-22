@@ -19,6 +19,7 @@ CREATE TABLE wp_afmng_anime (
 				name tinytext NOT NULL,
 				description mediumtext NULL,
 				capability tinytext NULL,
+				multiple BOOLEAN default 0 NOT NULL,
 				PRIMARY KEY  (step_id)
 				);
 				CREATE TABLE wp_afmng_tasks (
