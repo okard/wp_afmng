@@ -5,11 +5,6 @@ User Manager
 </div>
 
 <div id="afmng_body">
-<<<<<<< HEAD
-=======
-<h1>User Manager</h1>
-
->>>>>>> upstream/master
 <form id="update_user_caps" method="post" action="">
 	<table class="afmng_table">
 		<thead>
@@ -33,18 +28,11 @@ User Manager
 		<?php endforeach; ?>
 		
 	</table>
-<<<<<<< HEAD
 	<br>
-=======
-	
->>>>>>> upstream/master
 	<input type="hidden" name="action" value="update_user" />
 	<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Speichern') ?>" />
 	
 </form>
 
 </div>
-<<<<<<< HEAD
 </div>
-=======
->>>>>>> upstream/master

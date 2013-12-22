@@ -8,12 +8,8 @@ Project Manager
 <form id="dummyForm" method="post" action="">
 </form>
 
-<form id="dummyForm" method="post" action="">
-</form>
-
 <?php foreach($this->project_list as $project): ?>
 	<div class="project_box">
-<<<<<<< HEAD
 	<div class="project_box_title"><?php echo $project->anime_name; ?>
 	
 	<?php if($this->is_admin): ?>
@@ -24,12 +20,6 @@ Project Manager
 
 	<?php if($this->is_admin): ?>
 	
-=======
-	<h1><?php echo $project->anime_name; ?></h1>
-
-	<?php if($this->is_admin): ?>
-	<h3><a href="#" onclick="jQuery('#frmMngProject\\:<?php echo $project->project_id; ?>').toggle('slow'); return false;">Projekt Management</a></h3>
->>>>>>> upstream/master
 	<form id="frmMngProject:<?php echo $project->project_id; ?>" method="post" action="" style="display:none">
 		<input type="hidden" name="action" value="update_project" />
 		<input type="hidden" name="project_id" value="<?php echo $project->project_id; ?>" />
@@ -94,11 +84,9 @@ Project Manager
 								<?php echo $step->description; ?>
 							<?php else: ?>
 								<?php echo empty($step->user) ? '(Offen)' : $step->user; ?>
-<<<<<<< HEAD
-								<a href="#" onclick="return false;" title="<?php echo $step->description; ?>"><div class="button_notes"></a>
-=======
-								<a href='return false;' title="<?php echo $step->description; ?>">&nbsp;</a>
->>>>>>> upstream/master
+								<?php if(!empty($step->description)): ?>
+<a href="#" onclick='return false;' title="<?php echo $step->description; ?>"><div class="button_notes"></div></a>
+<?php endif; ?>
 							<?php endif; ?>
 						</td>
 					<?php endforeach; ?>
@@ -110,14 +98,8 @@ Project Manager
 	<?php endforeach; ?>
 	</table>
 
-<<<<<<< HEAD
 <br>
 	<?php if($this->is_admin): ?>
-=======
-
-	<?php if($this->is_admin): ?>
-	<h3><a href="#" onclick="jQuery('#frmAddRelease\\:<?php echo $project->project_id; ?>').toggle('slow'); return false;">Release hinzufügen</a></h3>
->>>>>>> upstream/master
 
 	<form id="frmAddRelease:<?php echo $project->project_id; ?>" method="post" action="" style="display:none">
 		<input type="hidden" name="action" value="add_release" />
@@ -145,11 +127,7 @@ Project Manager
 
 <?php if($this->is_admin): ?>
 <div id="project_add">
-<<<<<<< HEAD
 <div id="project_add_header">Projekt Hinzufügen</div>
-=======
-<h2>Projekt hinzufügen</h2>
->>>>>>> upstream/master
 <form id="frmAddProject" method="post" action="">
 	<input type="hidden" name="action" value="add_project" />
 
@@ -167,11 +145,7 @@ Project Manager
 <?php endif; ?>
 
 <?php if($this->is_admin): ?>
-<<<<<<< HEAD
 	<div id="project_done_header">Abgeschlossene Animes</div>
-=======
-	<h1>Abgeschlossene Animes</h1>
->>>>>>> upstream/master
 	<table class="afmng_table">
 		<thead>
 			<tr>

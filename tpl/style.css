@@ -2,14 +2,8 @@ h2 {
 padding-bottom: 5px;
 border-bottom: solid 1px #CCCCCC;
 }
-<<<<<<< HEAD
 
 #afmng_content{
-=======
-#afmng_body{
-padding: 20px;
-margin: 0px;
->>>>>>> upstream/master
 border: solid 1px #CCCCCC;
 color: #282828;
 font-family: 'Source Sans Pro', sans-serif;
@@ -34,7 +28,6 @@ padding: 0 20px 20px 20px;
 padding: 20px 0 20px 0;
 }
 
-<<<<<<< HEAD
 .project_box_title {
 line-height:30px;
 padding: 0 20px 0 20px;
@@ -45,17 +38,6 @@ border: solid 1px #CCCCCC;
 font-size: 18px;
 font-weight: normal;
 margin: .67em 0;
-=======
-.project_box h1 {
-	background-color: #eee;
-	line-height:1.5em;
-	padding: 0 20px 0 20px;
-	border-bottom: 1px solid blue;
-}
-
-#project_add{
-padding: 20px 0 20px 0;
->>>>>>> upstream/master
 }
 
 #project_done_header, #project_add_header, #task_current_header, #task_available_header, #task_random_header {
@@ -88,7 +70,6 @@ padding: 20px 0 20px 0;
 padding: 20px 0 20px 0;
 }
 
-<<<<<<< HEAD
 #update_user_caps {
 padding: 20px;
 }
@@ -113,8 +94,6 @@ div.button_add{
 	margin-top: 8px;
 	margin-right: 8px;
 }
-=======
->>>>>>> upstream/master
 
 div.button_delete{
 	background-image: url(./icon_delete.png);
@@ -123,7 +102,6 @@ div.button_delete{
 	height:16px;
 	display:inline-block;
 }
-<<<<<<< HEAD
 div.button_notes{
 	background-image: url(./icon_notes.png);
 	background-size:100%;
@@ -132,8 +110,6 @@ div.button_notes{
 	display:inline-block;
 }
 
-=======
->>>>>>> upstream/master
 
 .jconfirm_wrapper {
     position: fixed;
@@ -190,11 +166,7 @@ div.button_notes{
 }
 
 .status_2 { /*Erledigt*/
-<<<<<<< HEAD
 	background-color:#00b050;
-=======
-	background-color:green;
->>>>>>> upstream/master
 }
 
 /* step styles */

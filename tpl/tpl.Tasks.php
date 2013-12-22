@@ -8,8 +8,6 @@ Anime Fansub Manager
 
 <form id="dummyForm" method="post" action=""></form>
 
-<form id="dummyForm" method="post" action=""></form>
-
 <div id="task_current">
 
 <div id="task_current_header">Meine aktuellen Aufgaben (<?php echo $this->user; ?>)</div>
@@ -148,7 +146,4 @@ Anime Fansub Manager
 <?php endif; ?>
 </div>
 </div>
-<<<<<<< HEAD
 </div>
-=======
->>>>>>> upstream/master
