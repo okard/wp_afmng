@@ -16,6 +16,7 @@ Wordpress Plugin for Managing Fansub Releases of Animes
 - [X] Make usable for all plugin user (use right caps)
 - [ ] Reuseable project view (subtemplate)
 - [ ] Add delete button to episode view page
+- [ ] Edit user names by the status
 
 ### Task Manager
 
