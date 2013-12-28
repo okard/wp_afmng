@@ -44,12 +44,11 @@ Projekt Manager
 	<?php endif; ?>
 
 
-	<h2>Releases</h2>
 
 	<table class="afmng_table">
 		<thead>
 			<tr>
-			<th>Episode</th>
+			<th>#</th>
 			<th>Titel</th>
 			<th>Status</th>
 			</tr>

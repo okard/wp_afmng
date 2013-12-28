@@ -7,6 +7,7 @@ border-bottom: solid 1px #CCCCCC;
 border: solid 1px #CCCCCC;
 color: #282828;
 font-family: 'Source Sans Pro', sans-serif;
+font-size: 13px;
 }
 
 #afmng_header{
@@ -210,24 +211,22 @@ div.button_create{
 	border-collapse: collapse;
 	caption-side:top;
 	padding: 0 1px 0 1px;
-	border: 1px solid #777;
+	border: 1px solid #CCCCCC;
 	empty-cells:show;
 }
 
 .afmng_table thead {
-	border-bottom: 2px solid #777;
+	border-bottom: 2px solid #CCCCCC;
 	background-color: #f0f0f0;
 }
 
 .afmng_table th {
-	vertical-align:top;
 	padding:10px;
-	border-left:1px solid #777;
+	border-left:1px solid #CCCCCC;
 }
 
 .afmng_table td {
-	vertical-align:top;
-	border: 1px solid #777;
+	border: 1px solid #CCCCCC;
 	margin:0;
 	padding:10px;
 }
@@ -240,10 +239,10 @@ div.button_create{
 .afmng_subtable th {
 	border:0px;
 	padding:0 5px 0 5px;
-	border-left: 1px solid #777;
+	border-left: 1px solid #CCCCCC;
 }
 .afmng_subtable td {
 	border:0px;
 	padding:0 5px 0 5px;
-	border-left: 1px solid #777;
+	border-left: 1px solid #CCCCCC;
 }

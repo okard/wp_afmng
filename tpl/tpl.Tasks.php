@@ -16,7 +16,7 @@ Anime Fansub Manager
 	<thead>
 		<tr>
 		<th>Anime</th>
-		<th>Episode</th>
+		<th>#</th>
 		<th>Aufgabe</th>
 		<th>Status</th>
 		<th>Notizen</th>
