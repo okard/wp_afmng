@@ -188,11 +188,12 @@ div.button_notes{
 
 .afmng_table thead {
 	border-bottom: 2px solid #777;
+	background-color: #f0f0f0;
 }
 
 .afmng_table th {
 	vertical-align:top;
-	padding:0 5px 0 5px;
+	padding:10px;
 	border-left:1px solid #777;
 }
 
@@ -200,7 +201,7 @@ div.button_notes{
 	vertical-align:top;
 	border: 1px solid #777;
 	margin:0;
-	padding:0 5px 0 5px;
+	padding:10px;
 }
 
 .afmng_subtable {
