@@ -1,12 +1,16 @@
+<div id="afmng_content">
+<div id="afmng_header">
+<?php echo $this->episode->anime_name; ?> #<?php echo $this->episode->release_id; ?>
+</div>
+
 <div id="afmng_body">
 
+<div id="afmng_episode_edit">
 <form id="dummyForm" method="post" action="">
 	<input name="view" type="hidden" value="episode" />
 	<input name="release_id" type="hidden" value="<?php echo $this->episode->release_id; ?>"/>
 </form>
-
-
-<h1><?php echo $this->episode->anime_name; ?></h1>
+</div>
 
 <?php if($this->is_admin): ?>
 	<form id="updateEpisode" method="post" action="">
@@ -70,11 +74,11 @@
 			<?php endif; ?>
 		<td>
 			<?php if($this->is_admin): ?>
-				<a href="#" title="Speichern" onclick="afmng_tasks_update(<?php echo $task->task_id; ?>);return false;">Speichern</a>
-				<a href="#" title="Löschen" onclick="afmng_tasks_delete(<?php echo $task->task_id; ?>); return false;">Löschen</a>
+				<a href="#" title="Speichern" onclick="afmng_tasks_update(<?php echo $task->task_id; ?>);return false;"><div class="button_save"></div></a>
+				<a href="#" title="Löschen" onclick="afmng_tasks_delete(<?php echo $task->task_id; ?>); return false;"><div class="button_delete"></div></a>
 
 				<?php if($task->user): ?>
-					<a href="#" title="Freigeben" onclick="afmng_tasks_free(<?php echo $task->task_id; ?>); return false;">Freigeben</a>
+					<a href="#" title="Freigeben" onclick="afmng_tasks_free(<?php echo $task->task_id; ?>); return false;"><div class="button_free"><div></a>
 				<?php endif; ?>
 			<?php endif; ?>
 		</td>
@@ -83,4 +87,5 @@
 
 </table>
 
+</div>
 </div>

@@ -1,7 +1,7 @@
 <div id="afmng_content">
 
 <div id="afmng_header">
-Project Manager
+Projekt Manager
 </div>
 
 <div id="afmng_body">
@@ -13,8 +13,8 @@ Project Manager
 	<div class="project_box_title"><?php echo $project->anime_name; ?>
 	
 	<?php if($this->is_admin): ?>
-	<a href="#" onclick="jQuery('#frmMngProject\\:<?php echo $project->project_id; ?>').toggle('slow'); return false;"><div class="button_settings"></div></a>
-	<a href="#" onclick="jQuery('#frmAddRelease\\:<?php echo $project->project_id; ?>').toggle('slow'); return false;"><div class="button_add"></div></a>
+	<a href="#" title="Einstellungen" onclick="jQuery('#frmMngProject\\:<?php echo $project->project_id; ?>').toggle('slow'); return false;"><div class="button_settings"></div></a>
+	<a href="#" title="Release Hinzufügen" onclick="jQuery('#frmAddRelease\\:<?php echo $project->project_id; ?>').toggle('slow'); return false;"><div class="button_add"></div></a>
 	<?php endif; ?>
 	</div>
 
@@ -85,8 +85,8 @@ Project Manager
 							<?php else: ?>
 								<?php echo empty($step->user) ? '(Offen)' : $step->user; ?>
 								<?php if(!empty($step->description)): ?>
-<a href="#" onclick='return false;' title="<?php echo $step->description; ?>"><div class="button_notes"></div></a>
-<?php endif; ?>
+								<a href="#" onclick='return false;' title="<?php echo $step->description; ?>"><div class="button_notes"></div></a>
+								<?php endif; ?>
 							<?php endif; ?>
 						</td>
 					<?php endforeach; ?>

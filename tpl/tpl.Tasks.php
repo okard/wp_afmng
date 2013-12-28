@@ -41,8 +41,8 @@ Anime Fansub Manager
 		</td>
 		<td><input id="description:<?php echo $task->task_id; ?>" type="text" name="description" value="<?php echo $task->description; ?>" /></td>
 		<td>
-			<a href="#" onclick="afmng_tasks_update(<?php echo $task->task_id;?>); return false;">Speichern</a>
-			<a href="#" onclick="afmng_tasks_free(<?php echo $task->task_id;?>); return false;">Freigeben</a>
+			<a href="#" title="Speichern" onclick="afmng_tasks_update(<?php echo $task->task_id;?>); return false;"><div class="button_save"></div></a>
+			<a href="#" title="Freigeben"onclick="afmng_tasks_free(<?php echo $task->task_id;?>); return false;"><div class="button_free"></div></a>
 		</td>
 	</tr>
 	<?php endforeach; ?>
@@ -81,7 +81,7 @@ Anime Fansub Manager
 					<?php endif;  ?>
 				<?php else: ?>
 				
-					<a href="#" onclick="afmng_tasks_create_assign(<?php echo $task->release_id; ?>, <?php echo $task->step_id; ?>); return false;">Anlegen und annehmen</a>
+					<a href="#" title="Anlegen und annehmen" onclick="afmng_tasks_create_assign(<?php echo $task->release_id; ?>, <?php echo $task->step_id; ?>); return false;"><div class="button_create"></div></a>
 				<?php endif; ?>
 			</td>
 		</tr>
@@ -97,7 +97,6 @@ Anime Fansub Manager
 <h2>Abgeschlossene Aufgaben</h2>
 </div>
 -->
-
 <div id="task_random">
 <?php if($this->is_admin): ?>
 	<div id="task_random_header">Beliebige Aufgabe hinzufügen</div>

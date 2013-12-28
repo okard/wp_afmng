@@ -24,6 +24,10 @@ background-position:right center;
 padding: 0 20px 20px 20px;
 }
 
+#afmng_episode_edit{
+padding: 20px 0 0 0;
+}
+
 .project_box{
 padding: 20px 0 20px 0;
 }
@@ -102,6 +106,7 @@ div.button_delete{
 	height:16px;
 	display:inline-block;
 }
+
 div.button_notes{
 	background-image: url(./icon_notes.png);
 	background-size:100%;
@@ -110,6 +115,29 @@ div.button_notes{
 	display:inline-block;
 }
 
+div.button_free{
+	background-image: url(./icon_free.png);
+	background-size:100%;
+	width:16px;
+	height:16px;
+	display:inline-block;
+}
+
+div.button_save{
+	background-image: url(./icon_save.png);
+	background-size:100%;
+	width:16px;
+	height:16px;
+	display:inline-block;
+}
+
+div.button_create{
+	background-image: url(./icon_create.png);
+	background-size:100%;
+	width:16px;
+	height:16px;
+	display:inline-block;
+}
 
 .jconfirm_wrapper {
     position: fixed;
